@@ -79,13 +79,13 @@ This repository contains two parallel analyses evaluating AromaLIA:
 │   │       └── [fig-rq4-overall-comparison-python.pdf](multi-language-analysis/analysis/results/fig-rq4-overall-comparison-python.pdf)
 │   │
 │   ├── [tool-execution/](multi-language-analysis/tool-execution/)                 # Tool outputs from multi-language projects
-│   │   ├── [aromadr/](multi-language-analysis/tool-execution/aromadr/)                   # AromaLIA results for multi-language projects
+│   │   ├── [aromalia/](multi-language-analysis/tool-execution/aromalia/)                   # AromaLIA results for multi-language projects
 │   │   ├── [pytest-smell/](multi-language-analysis/tool-execution/pytest-smell/)              # pytest-smell results
 │   │   └── [tsdetect/](multi-language-analysis/tool-execution/tsdetect/)                  # TSDetect results
 │   │
 │   └── [analysis/results/](multi-language-analysis/analysis/results/)                       # Summary data and generated charts
-│       ├── [aromadr-java-test-smells.csv](multi-language-analysis/analysis/results/aromadr-java-test-smells.csv)
-│       ├── [aromadr-python-test-smells.csv](multi-language-analysis/analysis/results/aromadr-python-test-smells.csv)
+│       ├── [aromalia-java-test-smells.csv](multi-language-analysis/analysis/results/aromalia-java-test-smells.csv)
+│       ├── [aromalia-python-test-smells.csv](multi-language-analysis/analysis/results/aromalia-python-test-smells.csv)
 │       ├── [pytest-smell-python-test-smells.csv](multi-language-analysis/analysis/results/pytest-smell-python-test-smells.csv)
 │       ├── [tsdetect-java-test-smells.csv](multi-language-analysis/analysis/results/tsdetect-java-test-smells.csv)
 │       ├── [test-smells-summary.csv](multi-language-analysis/analysis/results/test-smells-summary.csv)

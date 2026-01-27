@@ -27,13 +27,13 @@ OUTPUT_OVERALL_PYTHON_CHART = os.path.join(CURRENT_DIR, "..", "results", "fig-rq
 
 # Tool mappings
 JAVA_TOOLS = {
-    "aromadr": "aromadr-java",
-    "other": "tsdetect-java"
+    "aromadr": "AromaLIA Java",
+    "other": "TSDETECT"
 }
 
 PYTHON_TOOLS = {
-    "aromadr": "aromadr-python",
-    "other": "pytest-smell"
+    "aromadr": "AromaLIA Python",
+    "other": "PyTest-Smell"
 }
 
 # Consistent color palette across all charts
