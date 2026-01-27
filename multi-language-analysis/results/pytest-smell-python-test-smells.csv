@@ -1,0 +1,10 @@
+TestFilePath,AssertionRoulette,ConditionalTest,DuplicateAssert,EmptyTest,ExceptionHandling,IgnoredTest,MagicNumberTest,RedundantPrint,SleepyTest,UnknownTest
+learning/katas/python/test_helper.py,0,1,0,0,0,0,0,0,0,0
+playground/infrastructure/test_ci_cd.py,2,1,0,0,0,0,0,0,0,0
+playground/infrastructure/test_datastore_client.py,4,1,0,0,0,0,0,0,0,0
+playground/infrastructure/test_helper.py,12,1,1,0,3,0,3,0,0,0
+playground/infrastructure/test_logger.py,0,0,0,0,0,0,1,0,0,0
+sdks/python/apache_beam/dataframe/schemas_test.py,0,1,0,0,0,0,0,0,0,0
+sdks/python/apache_beam/io/gcp/bigquery_test.py,0,2,0,0,0,0,0,0,0,0
+sdks/python/apache_beam/transforms/core_test.py,0,0,0,0,0,0,0,0,0,0
+sdks/python/apache_beam/yaml/examples/testing/examples_test.py,0,6,0,0,0,0,0,0,0,0

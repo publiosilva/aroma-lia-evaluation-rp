@@ -1,0 +1,109 @@
+TestFilePath,AssertionRoulette,ConditionalTest,DuplicateAssert,EmptyTest,ExceptionHandling,IgnoredTest,MagicNumberTest,RedundantPrint,SleepyTest,UnknownTest
+infra/iam/roles/test_generate_roles.py,0,0,0,0,0,0,0,0,0,3
+infra/keys/test_secret_manager.py,0,4,0,0,0,0,0,0,0,36
+infra/keys/test_service_account.py,0,2,0,0,0,0,0,0,1,38
+learning/katas/python/Common Transforms/Aggregation/Count/tests/test_task.py,0,0,0,0,0,0,0,0,0,2
+learning/katas/python/Common Transforms/Aggregation/Largest/tests/test_task.py,0,0,0,0,0,0,0,0,0,2
+learning/katas/python/Common Transforms/Aggregation/Mean/tests/test_task.py,0,0,0,0,0,0,0,0,0,2
+learning/katas/python/Common Transforms/Aggregation/Smallest/tests/test_task.py,0,0,0,0,0,0,0,0,0,2
+learning/katas/python/Common Transforms/Aggregation/Sum/tests/test_task.py,0,0,0,0,0,0,0,0,0,2
+learning/katas/python/Common Transforms/Filter/Filter/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Common Transforms/Filter/ParDo/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Common Transforms/WithKeys/WithKeys/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Branching/Branching/tests/test_task.py,0,3,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/CoGroupByKey/CoGroupByKey/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Combine/Combine PerKey/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Combine/CombineFn/tests/test_task.py,0,0,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Combine/Simple Function/tests/test_task.py,0,0,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Composite Transform/Composite Transform/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/FlattenWith/FlattenWith/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Flatten/Flatten/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/GroupByKey/GroupByKey/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Map/FlatMap/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Map/Map/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Map/ParDo OneToMany/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Map/ParDo/tests/test_task.py,0,1,0,0,0,0,0,0,0,1
+learning/katas/python/Core Transforms/Partition/Partition/tests/test_task.py,0,3,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Side Input/Side Input/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Side Output/Side Output/tests/test_task.py,0,3,0,0,0,0,0,0,0,2
+learning/katas/python/Core Transforms/Tee/Tee/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Examples/Word Count/Word Count/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/IO/TextIO/ReadFromText/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Introduction/Hello Beam/Hello Beam/tests/test_task.py,0,0,0,0,0,0,0,0,0,2
+learning/katas/python/Streaming/Timestamps/Add Timestamps/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Streaming/Triggers/Early Triggers/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Streaming/Triggers/Event Time Triggers/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Streaming/Triggers/Window Accumulation Modes/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/Streaming/Windows/Fixed Windows/tests/test_task.py,0,1,0,0,0,0,0,0,0,2
+learning/katas/python/test_helper.py,0,1,0,0,0,0,0,0,0,1
+playground/infrastructure/test_ci_cd.py,0,1,0,0,0,0,0,0,0,2
+playground/infrastructure/test_datastore_client.py,0,3,0,0,0,0,0,0,0,2
+playground/infrastructure/test_helper.py,25,1,15,0,3,0,1,0,0,22
+playground/infrastructure/test_logger.py,0,0,0,0,0,0,1,0,0,0
+playground/infrastructure/test_verify.py,0,0,0,0,0,0,0,0,0,2
+sdks/python/apache_beam/dataframe/doctests.py,0,3,0,0,0,0,0,0,0,5
+sdks/python/apache_beam/dataframe/schemas_test.py,0,1,0,0,0,0,0,0,0,1
+sdks/python/apache_beam/io/aws/s3io_test.py,2,36,1,0,0,0,0,0,0,34
+sdks/python/apache_beam/io/azure/blobstorageio_test.py,0,2,0,0,0,0,0,0,0,4
+sdks/python/apache_beam/io/filebasedsink_test.py,0,3,0,0,1,0,0,0,0,14
+sdks/python/apache_beam/io/filebasedsource_test.py,4,12,0,0,0,0,20,0,0,24
+sdks/python/apache_beam/io/filesystem_test.py,0,21,0,0,1,0,0,0,0,12
+sdks/python/apache_beam/io/filesystemio_test.py,0,3,0,0,0,0,0,0,0,10
+sdks/python/apache_beam/io/gcp/bigquery_avro_tools_test.py,0,1,0,0,0,0,0,0,0,0
+sdks/python/apache_beam/io/gcp/bigquery_file_loads_test.py,0,2,0,0,0,0,0,0,0,18
+sdks/python/apache_beam/io/gcp/bigquery_schema_tools_test.py,0,1,0,0,0,0,0,0,0,18
+sdks/python/apache_beam/io/gcp/bigquery_test.py,0,4,0,0,1,0,0,0,0,44
+sdks/python/apache_beam/io/gcp/bigquery_tools_test.py,0,2,0,0,3,0,0,0,0,66
+sdks/python/apache_beam/io/gcp/bigtableio_it_test.py,0,0,0,0,0,0,0,0,0,6
+sdks/python/apache_beam/io/gcp/bigtableio_test.py,2,6,0,0,1,0,2,1,0,7
+sdks/python/apache_beam/io/gcp/gcsio_retry_test.py,0,0,0,0,1,0,0,0,0,2
+sdks/python/apache_beam/io/gcp/gcsio_test.py,0,9,0,0,2,0,0,0,0,31
+sdks/python/apache_beam/io/gcp/healthcare/dicomio_test.py,0,0,0,0,0,0,0,0,0,16
+sdks/python/apache_beam/io/gcp/pubsub_test.py,0,7,0,0,0,0,0,0,0,45
+sdks/python/apache_beam/io/parquetio_it_test.py,0,0,0,0,0,0,0,0,0,1
+sdks/python/apache_beam/io/parquetio_test.py,0,3,0,0,0,0,2,0,0,27
+sdks/python/apache_beam/io/requestresponse_it_test.py,0,1,0,0,0,0,0,0,0,4
+sdks/python/apache_beam/io/requestresponse_test.py,0,0,0,0,0,0,0,0,0,7
+sdks/python/apache_beam/io/tfrecordio_test.py,0,5,0,0,0,0,0,0,0,33
+sdks/python/apache_beam/metrics/cells_test.py,0,8,0,0,0,0,0,0,0,29
+sdks/python/apache_beam/metrics/execution_test.py,0,1,0,0,0,0,0,0,0,5
+sdks/python/apache_beam/ml/anomaly/base_test.py,2,5,0,0,0,0,0,0,0,0
+sdks/python/apache_beam/ml/anomaly/specifiable_test.py,9,2,1,0,0,0,0,0,0,13
+sdks/python/apache_beam/ml/anomaly/thresholds_test.py,0,0,0,0,0,0,0,0,0,3
+sdks/python/apache_beam/ml/anomaly/transforms_test.py,0,4,0,0,1,0,0,0,0,8
+sdks/python/apache_beam/ml/gcp/cloud_dlp_test.py,0,0,0,0,0,0,0,0,0,4
+sdks/python/apache_beam/ml/rag/enrichment/bigquery_vector_search_it_test.py,0,0,0,0,0,0,0,0,0,11
+sdks/python/apache_beam/ml/rag/enrichment/milvus_search_it_test.py,0,0,0,0,0,0,0,0,0,9
+sdks/python/apache_beam/ml/rag/enrichment/milvus_search_test.py,0,0,0,0,2,0,0,0,0,10
+sdks/python/apache_beam/ml/rag/ingestion/milvus_search_it_test.py,0,5,0,0,0,0,0,0,0,8
+sdks/python/apache_beam/ml/rag/ingestion/milvus_search_test.py,0,1,0,0,0,0,0,0,0,7
+sdks/python/apache_beam/ml/transforms/base_test.py,0,3,0,0,0,0,0,0,0,16
+sdks/python/apache_beam/runners/dataflow/dataflow_metrics_test.py,0,0,0,0,0,0,0,0,0,5
+sdks/python/apache_beam/runners/dataflow/internal/clients/dataflow/message_matchers_test.py,0,0,0,0,0,0,0,0,0,2
+sdks/python/apache_beam/testing/analyzers/perf_analysis_test.py,0,0,0,0,0,0,0,0,0,12
+sdks/python/apache_beam/testing/test_pipeline_test.py,0,1,0,0,0,0,0,0,0,8
+sdks/python/apache_beam/testing/test_stream_it_test.py,0,0,0,0,0,0,0,0,0,3
+sdks/python/apache_beam/testing/test_stream_service_test.py,0,1,0,0,2,0,0,0,0,8
+sdks/python/apache_beam/testing/test_stream_test.py,0,5,0,0,0,0,0,0,0,18
+sdks/python/apache_beam/testing/test_utils_test.py,2,0,0,0,0,0,0,0,0,6
+sdks/python/apache_beam/transforms/enrichment_handlers/bigquery_it_test.py,0,2,0,0,0,0,0,0,0,14
+sdks/python/apache_beam/transforms/enrichment_handlers/bigquery_test.py,0,0,0,0,0,0,0,0,0,1
+sdks/python/apache_beam/transforms/enrichment_handlers/bigtable_it_test.py,0,2,0,0,0,0,0,0,0,10
+sdks/python/apache_beam/transforms/enrichment_handlers/bigtable_test.py,0,0,0,0,0,0,0,0,0,1
+sdks/python/apache_beam/transforms/enrichment_handlers/cloudsql_test.py,0,0,0,0,0,0,0,0,0,17
+sdks/python/apache_beam/transforms/enrichment_handlers/feast_feature_store_it_test.py,0,0,0,0,0,0,0,0,0,3
+sdks/python/apache_beam/transforms/enrichment_handlers/feast_feature_store_test.py,0,0,0,0,0,0,0,0,0,3
+sdks/python/apache_beam/transforms/enrichment_handlers/vertex_ai_feature_store_it_test.py,0,2,0,0,0,0,0,0,0,7
+sdks/python/apache_beam/transforms/enrichment_handlers/vertex_ai_feature_store_test.py,0,0,0,0,0,0,0,0,0,2
+sdks/python/apache_beam/transforms/enrichment_it_test.py,0,0,0,0,0,0,0,0,0,2
+sdks/python/apache_beam/transforms/enrichment_test.py,0,0,0,0,0,0,0,0,0,1
+sdks/python/apache_beam/transforms/ptransform_test.py,0,1,0,0,0,0,0,0,0,7
+sdks/python/apache_beam/typehints/typed_pipeline_test.py,0,0,0,0,0,0,0,0,0,1
+sdks/python/apache_beam/typehints/typehints_test.py,0,3,0,0,0,0,0,0,0,28
+sdks/python/apache_beam/utils/logger_test.py,0,9,0,0,0,0,0,0,0,8
+sdks/python/apache_beam/utils/processes_test.py,0,0,0,0,6,0,0,0,0,7
+sdks/python/apache_beam/utils/proto_utils_test.py,0,0,0,0,0,0,0,0,0,6
+sdks/python/apache_beam/yaml/examples/testing/examples_test.py,0,10,0,0,0,0,0,0,0,6
+sdks/python/apache_beam/yaml/integration_tests.py,0,2,0,0,0,0,0,0,0,1
+sdks/python/apache_beam/yaml/readme_test.py,0,10,0,0,0,0,0,0,0,1
+sdks/python/apache_beam/yaml/yaml_transform_test.py,0,0,0,0,0,0,0,0,0,2

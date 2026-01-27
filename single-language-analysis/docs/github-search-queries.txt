@@ -1,0 +1,10 @@
+- Java:
+    - `path:**/*Test.java language:Java "import org.junit"`
+    - `path:**/*Test.java language:Java "import org.junit" /(?s)@Test\s*(public|protected|private)?\s*(static\s+)?[\w<>\[\]]+\s+\w+\s*\([^)]*\)\s*\{\s*(?:\/\/.*\n|\s*\n)*\s*\}/`
+    - `path:**/*Test.java language:Java "import org.junit" "@Ignore"`
+    - `path:**/*Test.java language:Java "import org.junit" "Thread.sleep"`
+
+- Python:
+    - `path:**/test_*.py language:Python "import pytest" //`
+    - `path:**/test_*.py language:Python "import pytest" /(?s)def\s+test_\w+\s*\([^)]*\):\s*(?:\"\"\".*?\"\"\"\s*)?(?:#.*\n|\s*\n)*\s*pass/`
+    - `path:**/test_*.py language:Python "import pytest" "except" "raise"`

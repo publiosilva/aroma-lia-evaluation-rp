@@ -1,0 +1,5 @@
+Tool,Overall,AssertionRoulette,ConditionalTest,DuplicateAssert,EmptyTest,ExceptionHandling,IgnoredTest,MagicNumberTest,RedundantPrint,SleepyTest,UnknownTest
+aromadr-java,30489,16542,2422,1488,21,797,59,2585,25,98,6452
+aromadr-python,1270,46,242,17,0,24,0,26,1,1,913
+pytest-smell,39,18,13,1,0,3,0,4,0,0,0
+tsdetect-java,29285,4064,1044,634,9,6036,193,12924,25,59,4297

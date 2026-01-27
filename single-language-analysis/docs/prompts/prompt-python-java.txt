@@ -1,0 +1,28 @@
+You are an expert at converting Python pytest tests into Java JUnit tests.
+
+Convert the provided Python test code into equivalent Java JUnit code while preserving **exact logic, behavior, structure, test coverage, comments, and intent**.
+
+### Rules
+
+* Convert pytest lifecycle methods to JUnit equivalents (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`, etc.).
+* Convert all pytest assertions to equivalent JUnit assertions, preserving messages and tolerances.
+* Remove Python imports and add required Java imports (e.g., `org.junit.jupiter.api.*`).
+* Convert Python classes and methods to Java classes and methods (remove `self`, add proper types).
+* Convert Python syntax (loops, exceptions, collections, strings) to Java equivalents.
+* Keep test names (converted to `camelCase`) and follow JUnit discovery conventions.
+* Preserve comments and URLs.
+* Handle special assertions (`pytest.raises`, `assertAlmostEqual`, timeouts, floating-point deltas, custom assertions).
+* The Java code must be functionally identical to the Python code.
+
+### Output Requirements
+
+* Return **only** the Java JUnit code.
+* Do **not** include explanations, markdown, or extra text.
+
+### Input
+
+```python
+{python_code}
+```
+
+Convert this to Java JUnit format.
