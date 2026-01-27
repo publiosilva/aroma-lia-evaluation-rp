@@ -71,17 +71,26 @@ This repository contains two parallel analyses evaluating AromaLIA:
 │
 ├── [multi-language-analysis/](multi-language-analysis/)             # Analysis of projects using multiple languages
 │   │                                                               # Based on Apache Beam repository (https://github.com/apache/beam)
+│   ├── [analysis/](multi-language-analysis/analysis/)                      # Analysis scripts and results
+│   │   ├── [scripts/](multi-language-analysis/analysis/scripts/)                   # Python scripts for visualization
+│   │   │   └── [generate_rq4_charts.py](multi-language-analysis/analysis/scripts/generate_rq4_charts.py)  # RQ4: Test smell detection comparison charts
+│   │   └── [results/](multi-language-analysis/analysis/results/)                   # Generated charts
+│   │       ├── [fig-rq4-overall-comparison-java.pdf](multi-language-analysis/analysis/results/fig-rq4-overall-comparison-java.pdf)
+│   │       └── [fig-rq4-overall-comparison-python.pdf](multi-language-analysis/analysis/results/fig-rq4-overall-comparison-python.pdf)
+│   │
 │   ├── [tool-execution/](multi-language-analysis/tool-execution/)                 # Tool outputs from multi-language projects
 │   │   ├── [aromadr/](multi-language-analysis/tool-execution/aromadr/)                   # AromaLIA results for multi-language projects
 │   │   ├── [pytest-smell/](multi-language-analysis/tool-execution/pytest-smell/)              # pytest-smell results
 │   │   └── [tsdetect/](multi-language-analysis/tool-execution/tsdetect/)                  # TSDetect results
 │   │
-│   └── [results/](multi-language-analysis/results/)                       # Summary and aggregated results
-│       ├── [aromadr-java-test-smells.csv](multi-language-analysis/results/aromadr-java-test-smells.csv)
-│       ├── [aromadr-python-test-smells.csv](multi-language-analysis/results/aromadr-python-test-smells.csv)
-│       ├── [pytest-smell-python-test-smells.csv](multi-language-analysis/results/pytest-smell-python-test-smells.csv)
-│       ├── [tsdetect-java-test-smells.csv](multi-language-analysis/results/tsdetect-java-test-smells.csv)
-│       └── [test-smells-summary.csv](multi-language-analysis/results/test-smells-summary.csv)
+│   └── [analysis/results/](multi-language-analysis/analysis/results/)                       # Summary data and generated charts
+│       ├── [aromadr-java-test-smells.csv](multi-language-analysis/analysis/results/aromadr-java-test-smells.csv)
+│       ├── [aromadr-python-test-smells.csv](multi-language-analysis/analysis/results/aromadr-python-test-smells.csv)
+│       ├── [pytest-smell-python-test-smells.csv](multi-language-analysis/analysis/results/pytest-smell-python-test-smells.csv)
+│       ├── [tsdetect-java-test-smells.csv](multi-language-analysis/analysis/results/tsdetect-java-test-smells.csv)
+│       ├── [test-smells-summary.csv](multi-language-analysis/analysis/results/test-smells-summary.csv)
+│       ├── [fig-rq4-overall-comparison-java.pdf](multi-language-analysis/analysis/results/fig-rq4-overall-comparison-java.pdf)
+│       └── [fig-rq4-overall-comparison-python.pdf](multi-language-analysis/analysis/results/fig-rq4-overall-comparison-python.pdf)
 │
 └── [docs/](docs/)                                    # General documentation and reference materials
     ├── [test-smell-detection-algorithms.md](docs/test-smell-detection-algorithms.md)
@@ -203,9 +212,14 @@ python single-language-analysis/analysis/scripts/generate_rq2_charts.py
 
 # RQ3: How does AromaLIA perform for different test smell types?
 python single-language-analysis/analysis/scripts/generate_rq3_charts.py
+
+# RQ4: How does AromaLIA compare to other tools on multi-language projects?
+python multi-language-analysis/analysis/scripts/generate_rq4_charts.py
 ```
 
-The generated figures will be saved as PDF files in the [`single-language-analysis/analysis/results/`](single-language-analysis/analysis/results/) directory.
+The generated figures will be saved as PDF files:
+- Single-language analysis: [`single-language-analysis/analysis/results/`](single-language-analysis/analysis/results/) directory
+- Multi-language analysis: [`multi-language-analysis/analysis/results/`](multi-language-analysis/analysis/results/) directory
 
 ## Research Questions
 
@@ -223,6 +237,11 @@ AromaLIA maintains high performance across all five languages, demonstrating tru
 **How does AromaLIA perform for different types of test smells?**
 
 AromaLIA shows consistent performance across different test smell categories, with varying levels of difficulty for different smell types.
+
+### RQ4: Multi-Language Project Comparison
+**How does AromaLIA compare to other tools when analyzing multi-language projects?**
+
+AromaLIA demonstrates its effectiveness on polyglot projects by comparing the amount of test smells detected against language-specific tools (TSDetect for Java and pytest-smell for Python) on the Apache Beam multi-language repository.
 
 ## Results
 
@@ -245,7 +264,13 @@ All evaluation results for single-language projects are available in the [`singl
 
 ### Multi-Language Analysis Results
 
-The multi-language analysis was performed on the [Apache Beam repository](https://github.com/apache/beam), which contains code written in multiple programming languages (primarily Java and Python). Results for multi-language projects are available in the [`multi-language-analysis/results/`](multi-language-analysis/results/) directory. See [`multi-language-analysis/README.md`](multi-language-analysis/README.md) for details.
+The multi-language analysis was performed on the [Apache Beam repository](https://github.com/apache/beam), which contains code written in multiple programming languages (primarily Java and Python). Results for multi-language projects are available in the [`multi-language-analysis/analysis/results/`](multi-language-analysis/analysis/results/) directory.
+
+**Visualizations**:
+- [`fig-rq4-overall-comparison-java.pdf`](multi-language-analysis/analysis/results/fig-rq4-overall-comparison-java.pdf): Overall comparison of AromaLIA vs TSDetect for Java
+- [`fig-rq4-overall-comparison-python.pdf`](multi-language-analysis/analysis/results/fig-rq4-overall-comparison-python.pdf): Overall comparison of AromaLIA vs pytest-smell for Python
+
+See [`multi-language-analysis/README.md`](multi-language-analysis/README.md) for details.
 
 ## Data Availability
 
