@@ -95,7 +95,7 @@ def plot_overall_java_comparison(df, output_path):
     # Customize chart
     ax.set_xlabel("Tool", fontsize=12)
     ax.set_ylabel("Number of Test Smells Detected", fontsize=12)
-    ax.set_title("RQ4: Overall Test Smell Detection Comparison (Java)", fontsize=14, fontweight='bold')
+    # ax.set_title("RQ4: Overall Test Smell Detection Comparison (Java)", fontsize=14, fontweight='bold')
     ax.set_xticks(x)
     ax.set_xticklabels(tools)
     ax.grid(axis='y', alpha=0.3)
@@ -137,7 +137,7 @@ def plot_overall_python_comparison(df, output_path):
     # Customize chart
     ax.set_xlabel("Tool", fontsize=12)
     ax.set_ylabel("Number of Test Smells Detected", fontsize=12)
-    ax.set_title("RQ4: Overall Test Smell Detection Comparison (Python)", fontsize=14, fontweight='bold')
+    # ax.set_title("RQ4: Overall Test Smell Detection Comparison (Python)", fontsize=14, fontweight='bold')
     ax.set_xticks(x)
     ax.set_xticklabels(tools)
     ax.grid(axis='y', alpha=0.3)
