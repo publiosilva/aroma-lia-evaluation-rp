@@ -70,6 +70,7 @@ This repository contains two parallel analyses evaluating AromaLIA:
 │           └── [prompt-python-java.txt](single-language-analysis/docs/prompts/prompt-python-java.txt)
 │
 ├── [multi-language-analysis/](multi-language-analysis/)             # Analysis of projects using multiple languages
+│   │                                                               # Based on Apache Beam repository (https://github.com/apache/beam)
 │   ├── [tool-execution/](multi-language-analysis/tool-execution/)                 # Tool outputs from multi-language projects
 │   │   ├── [aromadr/](multi-language-analysis/tool-execution/aromadr/)                   # AromaLIA results for multi-language projects
 │   │   ├── [pytest-smell/](multi-language-analysis/tool-execution/pytest-smell/)              # pytest-smell results
@@ -244,7 +245,7 @@ All evaluation results for single-language projects are available in the [`singl
 
 ### Multi-Language Analysis Results
 
-Results for multi-language projects are available in the [`multi-language-analysis/results/`](multi-language-analysis/results/) directory. See [`multi-language-analysis/README.md`](multi-language-analysis/README.md) for details.
+The multi-language analysis was performed on the [Apache Beam repository](https://github.com/apache/beam), which contains code written in multiple programming languages (primarily Java and Python). Results for multi-language projects are available in the [`multi-language-analysis/results/`](multi-language-analysis/results/) directory. See [`multi-language-analysis/README.md`](multi-language-analysis/README.md) for details.
 
 ## Data Availability
 
@@ -273,6 +274,9 @@ Results for multi-language projects are available in the [`multi-language-analys
 
 ### Multi-Language Analysis Data
 
+The multi-language analysis was conducted on the [Apache Beam repository](https://github.com/apache/beam), a unified programming model for batch and streaming data processing that contains code in multiple languages (Java, Python, Go, TypeScript, and others).
+
+- **Source Repository**: [Apache Beam](https://github.com/apache/beam)
 - **Tool Outputs**: Available in [`multi-language-analysis/tool-execution/`](multi-language-analysis/tool-execution/) directory
 - **Results**: Available in [`multi-language-analysis/results/`](multi-language-analysis/results/) directory
 
