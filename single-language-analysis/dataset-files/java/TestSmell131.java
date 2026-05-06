@@ -1,9 +1,10 @@
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.*;
 
 public class TestSmell131 {
 
-    @DisabledOnOs(OS.WINDOWS)
+    @Ignore("Disabled on Windows")
     @Test
     public void testNoTerm() {
         // monkeypatch.setenv("TERM", "");

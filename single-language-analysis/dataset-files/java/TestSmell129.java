@@ -1,13 +1,11 @@
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class TestSmell129 {
 
-    @DisabledIf(
-        expression = "T(com.example.NxDispatch).isInvalidBackend()",
-        reason = "Skip if automatic backend is not 'nx-loopback'"
-    )
+    @Ignore("Skip if automatic backend is not 'nx-loopback'")
     @Test
     public void testGraphConverterNeedsBackend() {
         // When testing, `nx.from_scipy_sparse_array` will *always* call the backend

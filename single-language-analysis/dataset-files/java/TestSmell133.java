@@ -1,9 +1,10 @@
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.*;
 
 public class TestSmell133 {
 
-    @Disabled("5 seconds is also too long")
+    @Ignore("5 seconds is also too long")
     @Test
     public void testPrimesParallel() {
         long t0 = System.currentTimeMillis();

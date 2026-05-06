@@ -1,10 +1,11 @@
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.*;
 
 public class TestSmell137 {
 
     @Test
-    @DisabledIf("isNot64Bit")
+    @Ignore("Disabled on non-64-bit environments")
     public void testFrameToJsonFloatPrecision() {
         double value = 0.95;
         int precision = 1;

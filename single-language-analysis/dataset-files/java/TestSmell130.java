@@ -1,13 +1,11 @@
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.*;
 import java.util.Random;
 
 public class TestSmell130 {
 
-    @DisabledIf(
-        expression = "!T(com.example.NumExpr).isInstalled()",
-        reason = "Unary ops only implemented for numexpr"
-    )
+    @Ignore("Unary ops only implemented for numexpr")
     @Test
     public void testUnaryFunctions() {
         String fn = getUnaryMathOp(); // Placeholder for parameterization

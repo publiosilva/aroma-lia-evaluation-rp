@@ -1,11 +1,12 @@
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.*;
 import cobaya.yaml.YamlLoad;
 import cobaya.model.GetModel;
 
 public class TestSmell134 {
 
-    @Disabled("cobaya optional")
+    @Ignore("cobaya optional")
     @Test
     public void testCobaya() {
         String infoYaml = "likelihood:\n" +

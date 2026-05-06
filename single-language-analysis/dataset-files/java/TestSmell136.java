@@ -1,10 +1,11 @@
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.*;
 
 public class TestSmell136 {
 
     @Test
-    @DisabledIf("lreleaseNotFound")
+    @Ignore("Disabled when lrelease is not available")
     public void testTranslations() {
         TestProject trProject = qipkgAction.addTestProject("tr_project");
         String pmlPath = trProject.getPath() + "/tr.pml";

@@ -1,10 +1,11 @@
 import org.junit.Test;
+import org.junit.Ignore;
 import static org.junit.Assert.*;
 
 public class TestSmell135 {
 
     @Test
-    @DisabledIf("isNotTensorFlow")
+    @Ignore("Disabled when TensorFlow is unavailable")
     public void testSparsePlaceholderFit() {
         Object[] testInputs = new Object[2];
         for (int i = 0; i < 2; i++) {
