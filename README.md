@@ -161,6 +161,7 @@ Required packages:
 - `matplotlib>=3.5.0` - Chart generation and visualization
 - `seaborn>=0.11.0` - Statistical visualization styling
 - `scikit-learn>=1.1.0` - Precision, recall, and F1-score metrics
+- `statsmodels>=0.14.0` - Mixed-effects generalized linear modeling
 
 ## Setup
 
@@ -220,6 +221,18 @@ python multi-language-analysis/analysis/scripts/generate_rq4_charts.py
 The generated figures will be saved as PDF files:
 - Single-language analysis: [`single-language-analysis/analysis/results/`](single-language-analysis/analysis/results/) directory
 - Multi-language analysis: [`multi-language-analysis/analysis/results/`](multi-language-analysis/analysis/results/) directory
+
+### Step 3: Run Statistical Significance Tests (RQ1-RQ3)
+
+```bash
+python single-language-analysis/analysis/scripts/statistical_tests_rq1_rq3.py
+```
+
+This script generates the inferential analysis artifacts in [`single-language-analysis/analysis/results/`](single-language-analysis/analysis/results/):
+- [`rq1-statistical-tests.csv`](single-language-analysis/analysis/results/rq1-statistical-tests.csv): McNemar exact tests for AromaLIA vs each baseline tool
+- [`rq2-rq3-omnibus-tests.csv`](single-language-analysis/analysis/results/rq2-rq3-omnibus-tests.csv): omnibus mixed-effects tests for language and smell effects
+- [`rq2-rq3-pairwise-tests.csv`](single-language-analysis/analysis/results/rq2-rq3-pairwise-tests.csv): Holm-corrected pairwise contrasts with odds ratios
+- [`rq1-rq2-rq3-statistical-interpretation.md`](single-language-analysis/analysis/results/rq1-rq2-rq3-statistical-interpretation.md): plain-language interpretation
 
 ## Research Questions
 

@@ -85,8 +85,8 @@ def evaluate_language(lang, ground_truth_path, result_path):
     if not df_true["filename"].equals(df_pred["filename"]):
         raise ValueError(f"Filenames mismatch for language '{lang}'")
 
-    # For C#, exclude "Exception Handling" test smell
-    smell_columns = [c for c in df_true.columns if c != "filename" and not (lang == "csharp" and c == "Exception Handling")]
+    # For C#, exclude ExceptionHandling (xNose cannot detect it; align with statistical_tests_rq1_rq3.py)
+    smell_columns = [c for c in df_true.columns if c != "filename" and not (lang == "csharp" and c == "ExceptionHandling")]
 
     per_smell = []
     all_true, all_pred = [], []
