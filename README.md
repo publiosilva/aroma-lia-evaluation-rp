@@ -1,8 +1,16 @@
-# AromaLIA: A Language-Independent Approach to Detect Test Smells
+# Decoupling Test Smell Detection from Programming Language: The AromaLIA Approach
 
 ## Abstract
 
-Tests play a crucial role in ensuring the quality and reliability of software systems. However, test code is often susceptible to issues that can compromise its effectiveness and hinder long-term maintainability. Among these issues are *test smells*, which are poor design choices made by developers when writing test code. In recent years, this topic has gained significant attention, with numerous studies proposing techniques for detecting test smells across various programming languages. Although test smells are conceptually similar across languages, most existing detection approaches are language-specific, which limits their applicability and reusability. To address this limitation, we introduce *AromaLIA*, a language-independent approach for detecting test smells. Unlike existing solutions, AromaLIA employs a unified detection mechanism to detect test smells across multiple programming languages. To validate our approach, we developed a tool implementing AromaLIA for detecting ten types of test smells in five languages: C#, Java, Python, JavaScript, and TypeScript. We evaluated its effectiveness against three existing language-specific test smell detection tools using a pre-classified, manually validated dataset containing 830 instances of test smells. The AromaLIA-based tool achieved a precision of 0.97, a recall of 0.96, and an F1-score of 0.97, outperforming all three language-specific tools. AromaLIA paves the way for more reusable and broadly applicable test smell detection solutions, reducing the effort required to support new programming languages and advancing the state of cross-language software quality analysis.
+Context: Tests play a crucial role in ensuring software quality and reliability; however, test code is frequently affected by test smells that hinder maintainability. Existing detection approaches are predominantly language-specific, which limits their reuse across ecosystems.
+
+Objective: This study proposes AromaLIA, a language-independent approach for detecting test smells by decoupling detection rules, enabling smell detection regardless of the programming language.
+
+Method: We operationalize the approach for ten test smells across C#, Java, Python, JavaScript, and TypeScript, and evaluate it against language-specific baselines using a manually validated dataset of 830 test files.
+
+Results: In this evaluation setting, AromaLIA achieves high effectiveness (precision 97%, recall 96%, F1-score 97%) and outperforms the compared language-specific baselines under directly comparable conditions.
+
+Conclusion: These results demonstrate the effectiveness of AromaLIA as a reusable architectural foundation for cross-language test smell detection, showing that language-independent detection at the rule level can achieve high performance compared to language-specific approaches.
 
 ## Repository Structure
 
