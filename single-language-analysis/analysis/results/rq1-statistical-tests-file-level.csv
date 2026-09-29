@@ -1,0 +1,4 @@
+comparison,language,grain,n_files,n_ties,b,c,n_discordant,p_value,discordant_advantage,p_value_holm,significant_alpha_0_05
+AromaLIA vs xNose,csharp,file_majority,166,89,75,2,77,3.975760896174872e-20,0.948051948051948,3.975760896174872e-20,True
+AromaLIA vs TSDetect,java,file_majority,166,40,120,6,126,1.2177468021911254e-28,0.9047619047619048,2.4354936043822508e-28,True
+AromaLIA vs pytest-smell,python,file_majority,166,14,150,2,152,4.0739249604083244e-42,0.9736842105263158,1.2221774881224973e-41,True

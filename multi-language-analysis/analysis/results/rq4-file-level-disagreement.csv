@@ -1,0 +1,14 @@
+comparison,smell,aroma_files,baseline_files,common_files,only_aroma_files,only_baseline_files,both,only_aroma,only_baseline,note
+coverage,,1667,1756,1510,157,246,,,,Java detection files
+coverage,,108,9,8,100,1,,,,Python detection files
+java-file-presence,AssertionRoulette,,,1510,,,877,14,87,TSDETECT
+java-file-presence,ConditionalTestLogic,,,1510,,,405,51,7,TSDETECT
+java-file-presence,DuplicateAssert,,,1510,,,220,23,43,TSDETECT
+java-file-presence,EmptyTest,,,1510,,,4,5,0,TSDETECT
+java-file-presence,ExceptionHandling,,,1510,,,206,8,687,TSDETECT
+java-file-presence,IgnoredTest,,,1510,,,29,1,56,TSDETECT
+java-file-presence,MagicNumberTest,,,1510,,,375,0,1132,TSDETECT
+java-file-presence,RedundantPrint,,,1510,,,15,1,1,TSDETECT
+java-file-presence,SleepyTest,,,1510,,,40,8,0,TSDETECT
+java-file-presence,UnknownTest,,,1510,,,815,212,5,TSDETECT
+python-unknown-test,UnknownTest,105,,,,,913,1270,,both=UnknownTest instances; only_aroma=all AromaLIA Python instances
