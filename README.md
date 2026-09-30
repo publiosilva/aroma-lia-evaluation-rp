@@ -323,3 +323,7 @@ The multi-language analysis was conducted on the [Apache Beam repository](https:
 - **Documentation**: Available in [`docs/`](docs/) directory
   - [Test smell detection algorithms documentation](docs/test-smell-detection-algorithms.md)
   - [High-level test data model](docs/high-level-test-data-model.ts)
+
+## Supplementary tables
+
+- [Structural AromaDr adapter LOC](tables/aromadr-adapter-loc.md) (commit `a0043c5`): per-stack adapters and shared components referenced from Section 3.5 of the manuscript.
