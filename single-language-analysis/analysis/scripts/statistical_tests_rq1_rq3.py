@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """
 Statistical significance analyses for RQ1, RQ2 and RQ3.
+
+RQ2/RQ3 use a Bayesian variational binomial mixed GLM
+(statsmodels BinomialBayesMixedGLM.fit_vb) with a random intercept for each
+base_case_id (001-166), shared across language variants. RQ1 reports McNemar
+on (file, smell) cells plus a file-level sensitivity analysis.
 """
 
 import os
@@ -8,9 +13,10 @@ from itertools import combinations
 
 import numpy as np
 import pandas as pd
-from scipy.stats import binomtest, norm
+from scipy.stats import binomtest, chi2, norm
 from statsmodels.genmod.bayes_mixed_glm import BinomialBayesMixedGLM
 
+from base_case_clustering import extract_base_case_id, load_base_case_project_map
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 RESULTS_DIR = os.path.join(CURRENT_DIR, "..", "results")
@@ -37,6 +43,7 @@ ALPHA = 0.05
 
 LONG_TABLE_OUT = os.path.join(RESULTS_DIR, "rq1-rq3-long-format-correctness.csv")
 RQ1_OUT = os.path.join(RESULTS_DIR, "rq1-statistical-tests.csv")
+RQ1_FILE_OUT = os.path.join(RESULTS_DIR, "rq1-statistical-tests-file-level.csv")
 RQ23_OMNIBUS_OUT = os.path.join(RESULTS_DIR, "rq2-rq3-omnibus-tests.csv")
 RQ23_PAIRWISE_OUT = os.path.join(RESULTS_DIR, "rq2-rq3-pairwise-tests.csv")
 INTERPRETATION_OUT = os.path.join(RESULTS_DIR, "rq1-rq2-rq3-statistical-interpretation.md")
@@ -46,7 +53,7 @@ def normalize_filename(value):
     return str(value).strip().lower()
 
 
-def to_long_format(language, df_true, df_pred, tool_name):
+def to_long_format(language, df_true, df_pred, tool_name, project_map):
     df_true = df_true.copy()
     df_pred = df_pred.copy()
     df_true["filename_norm"] = df_true["filename"].map(normalize_filename)
@@ -67,6 +74,8 @@ def to_long_format(language, df_true, df_pred, tool_name):
     records = []
     for _, row in merged.iterrows():
         filename = row["filename_true"]
+        base_case_id = extract_base_case_id(filename)
+        project_id = project_map.get(base_case_id, "unknown")
         for smell in smell_base:
             if language == "csharp" and smell == "ExceptionHandling":
                 continue
@@ -76,6 +85,8 @@ def to_long_format(language, df_true, df_pred, tool_name):
                 {
                     "language": language,
                     "filename": filename,
+                    "base_case_id": base_case_id,
+                    "project_id": project_id,
                     "smell": smell,
                     "y_true": y_true,
                     "y_pred": y_pred,
@@ -145,8 +156,6 @@ def _wald_block_test(summary_df, pattern):
         return np.nan
     stat = float(np.sum((block["z_value"].astype(float)) ** 2))
     df = int(len(block))
-    # Chi-square SF via normal approximation fallback is unnecessary; use scipy from stats namespace
-    from scipy.stats import chi2
     return float(chi2.sf(stat, df))
 
 
@@ -194,7 +203,7 @@ def _pairwise_from_treatment(result, factor_name, levels):
     return pd.DataFrame(contrasts)
 
 
-def build_long_tables():
+def build_long_tables(project_map):
     aromalia_tables = []
     baseline_tables = {}
     for language in LANGUAGES:
@@ -202,19 +211,19 @@ def build_long_tables():
         aromalia_path = os.path.join(AROMALIA_SUMMARY_DIR, f"{language}.csv")
         gt_df = pd.read_csv(gt_path)
         ar_df = pd.read_csv(aromalia_path)
-        aromalia_tables.append(to_long_format(language, gt_df, ar_df, "AromaLIA"))
+        aromalia_tables.append(to_long_format(language, gt_df, ar_df, "AromaLIA", project_map))
 
     for tool_name, source in BASELINE_SOURCES.items():
         language = source["language"]
         gt_df = pd.read_csv(os.path.join(GROUND_TRUTH_DIR, f"{language}.csv"))
         bl_df = pd.read_csv(source["path"])
-        baseline_tables[tool_name] = to_long_format(language, gt_df, bl_df, tool_name)
+        baseline_tables[tool_name] = to_long_format(language, gt_df, bl_df, tool_name, project_map)
 
     aromalia_long = pd.concat(aromalia_tables, ignore_index=True)
     return aromalia_long, baseline_tables
 
 
-def run_rq1(aromalia_long, baseline_tables):
+def run_rq1_cell_level(aromalia_long, baseline_tables):
     rows = []
     for tool_name, baseline_df in baseline_tables.items():
         merged = aromalia_long[aromalia_long["language"] == baseline_df["language"].iloc[0]].merge(
@@ -230,6 +239,7 @@ def run_rq1(aromalia_long, baseline_tables):
             {
                 "comparison": f"AromaLIA vs {tool_name}",
                 "language": baseline_df["language"].iloc[0],
+                "grain": "file_smell_cell",
                 "n_pairs": int(len(merged)),
                 **stats,
             }
@@ -241,13 +251,53 @@ def run_rq1(aromalia_long, baseline_tables):
     return out
 
 
+def run_rq1_file_level(aromalia_long, baseline_tables):
+    """Sensitivity: per file, the system with more correct smell labels wins."""
+    rows = []
+    for tool_name, baseline_df in baseline_tables.items():
+        merged = aromalia_long[aromalia_long["language"] == baseline_df["language"].iloc[0]].merge(
+            baseline_df[["language", "filename", "smell", "correct"]],
+            on=["language", "filename", "smell"],
+            suffixes=("_aromalia", "_baseline"),
+            how="inner",
+        )
+        file_scores = (
+            merged.groupby(["language", "filename"], as_index=False)
+            .agg(
+                n_correct_aromalia=("correct_aromalia", "sum"),
+                n_correct_baseline=("correct_baseline", "sum"),
+                n_smells=("smell", "count"),
+            )
+        )
+        b = int((file_scores["n_correct_aromalia"] > file_scores["n_correct_baseline"]).sum())
+        c = int((file_scores["n_correct_aromalia"] < file_scores["n_correct_baseline"]).sum())
+        n_ties = int((file_scores["n_correct_aromalia"] == file_scores["n_correct_baseline"]).sum())
+        stats = mcnemar_exact_test(b, c)
+        rows.append(
+            {
+                "comparison": f"AromaLIA vs {tool_name}",
+                "language": baseline_df["language"].iloc[0],
+                "grain": "file_majority",
+                "n_files": int(len(file_scores)),
+                "n_ties": n_ties,
+                **stats,
+            }
+        )
+    out = pd.DataFrame(rows)
+    out["p_value_holm"] = holm_adjust(out["p_value"].tolist())
+    out["significant_alpha_0_05"] = out["p_value_holm"] < ALPHA
+    out.to_csv(RQ1_FILE_OUT, index=False)
+    return out
+
+
 def run_rq2_rq3(aromalia_long):
     df = aromalia_long.copy()
-    df["instance_id"] = df["language"] + "::" + df["filename"]
+    # Random intercept shared by all five language variants of each base case.
+    df["base_case_id"] = df["base_case_id"].astype(str)
 
     model = BinomialBayesMixedGLM.from_formula(
         "correct ~ C(language) + C(smell)",
-        {"instance": "0 + C(instance_id)"},
+        {"base_case": "0 + C(base_case_id)"},
         df,
     )
     result = model.fit_vb()
@@ -278,11 +328,17 @@ def run_rq2_rq3(aromalia_long):
     return omnibus, pairwise
 
 
-def write_interpretation(rq1_df, omnibus_df, pairwise_df):
+def write_interpretation(rq1_df, rq1_file_df, omnibus_df, pairwise_df):
     lines = [
         "# Statistical Interpretation for RQ1-RQ3",
         "",
-        "## RQ1 - AromaLIA vs language-specific tools",
+        "Clustering unit: `base_case_id` (166 curated cases). Mixed model: "
+        "`BinomialBayesMixedGLM.fit_vb` with random intercept per base case "
+        "(not per `language::filename`). Bootstrap CIs elsewhere resample the "
+        "same 166 base cases. Source-project nesting is not fitted (73/105 "
+        "projects are singletons).",
+        "",
+        "## RQ1 - AromaLIA vs language-specific tools (file x smell cells)",
     ]
     for _, row in rq1_df.iterrows():
         verdict = "statistically significant" if row["significant_alpha_0_05"] else "not statistically significant"
@@ -290,6 +346,14 @@ def write_interpretation(rq1_df, omnibus_df, pairwise_df):
         lines.append(
             f"- {row['comparison']} ({row['language']}): {verdict} after Holm correction "
             f"(p={row['p_value_holm']:.4g}), discordant advantage={row['discordant_advantage']:.4f} ({direction})."
+        )
+
+    lines.extend(["", "## RQ1 sensitivity - file-level majority (more correct smells wins)"])
+    for _, row in rq1_file_df.iterrows():
+        verdict = "statistically significant" if row["significant_alpha_0_05"] else "not statistically significant"
+        lines.append(
+            f"- {row['comparison']} ({row['language']}): {verdict} after Holm correction "
+            f"(b={row['b']}, c={row['c']}, ties={row['n_ties']}, p={row['p_value_holm']:.4g})."
         )
 
     lines.extend(["", "## RQ2 and RQ3 - AromaLIA across languages and smells"])
@@ -316,17 +380,20 @@ def write_interpretation(rq1_df, omnibus_df, pairwise_df):
 
 def main():
     os.makedirs(RESULTS_DIR, exist_ok=True)
-    aromalia_long, baseline_tables = build_long_tables()
+    project_map = load_base_case_project_map()
+    aromalia_long, baseline_tables = build_long_tables(project_map)
 
     baseline_concat = pd.concat(baseline_tables.values(), ignore_index=True)
     pd.concat([aromalia_long, baseline_concat], ignore_index=True).to_csv(LONG_TABLE_OUT, index=False)
 
-    rq1_df = run_rq1(aromalia_long, baseline_tables)
+    rq1_df = run_rq1_cell_level(aromalia_long, baseline_tables)
+    rq1_file_df = run_rq1_file_level(aromalia_long, baseline_tables)
     omnibus_df, pairwise_df = run_rq2_rq3(aromalia_long)
-    write_interpretation(rq1_df, omnibus_df, pairwise_df)
+    write_interpretation(rq1_df, rq1_file_df, omnibus_df, pairwise_df)
 
     print(f"✅ Long format table saved to: {LONG_TABLE_OUT}")
     print(f"✅ RQ1 tests saved to: {RQ1_OUT}")
+    print(f"✅ RQ1 file-level sensitivity saved to: {RQ1_FILE_OUT}")
     print(f"✅ RQ2/RQ3 omnibus tests saved to: {RQ23_OMNIBUS_OUT}")
     print(f"✅ RQ2/RQ3 pairwise tests saved to: {RQ23_PAIRWISE_OUT}")
     print(f"✅ Interpretation saved to: {INTERPRETATION_OUT}")

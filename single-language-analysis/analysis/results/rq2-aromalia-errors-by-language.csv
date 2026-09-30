@@ -1,0 +1,6 @@
+language,n_cells,errors,FP,FN,top_smell,top_smell_errors
+java,1660,17,11,6,DuplicateAssert,6
+python,1660,20,6,14,ConditionalTestLogic,6
+csharp,1660,19,8,11,MagicNumberTest,6
+javascript,1660,19,7,12,MagicNumberTest,7
+typescript,1660,29,9,20,ConditionalTestLogic,8

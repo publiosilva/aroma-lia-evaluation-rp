@@ -20,6 +20,8 @@ import seaborn as sns
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 METRICS_FILE = os.path.join(CURRENT_DIR, "..", "results", "aromalia-per-smell-per-language-metrics.csv")
+SMELL_AGG_FILE = os.path.join(CURRENT_DIR, "..", "results", "aromalia-per-smell-aggregated-metrics.csv")
+CATEGORY_AGG_FILE = os.path.join(CURRENT_DIR, "..", "results", "aromalia-per-category-aggregated-metrics.csv")
 
 OUTPUT_F1_BAR_CHART = os.path.join(CURRENT_DIR, "..", "results", "fig-rq3-f1-per-smell-bar.pdf")
 OUTPUT_SMELL_CATEGORY_BAR_CHART = os.path.join(CURRENT_DIR, "..", "results", "fig-rq3-difficulty-by-category-bar.pdf")
@@ -53,8 +55,8 @@ def load_metrics(file_path):
     return pd.read_csv(file_path)
 
 
-def plot_f1_bar_chart(df, output_path):
-    """Create bar chart for F1-score of AromaLIA for each test smell (averaged across languages)."""
+def plot_f1_bar_chart(df_f1, output_path):
+    """Bar chart of cross-language mean F1 per smell with base-case clustered CIs."""
     test_smell_map = {
         "AssertionRoulette": "Assertion Roulette",
         "ConditionalTestLogic": "Conditional Test Logic",
@@ -67,22 +69,21 @@ def plot_f1_bar_chart(df, output_path):
         "ExceptionHandling": "Exception Handling",
         "UnknownTest": "Unknown Test"
     }
-    
-    df_f1 = df.groupby("TestSmell")[["F1", "F1_CI_Lower", "F1_CI_Upper"]].mean().reset_index()
+
+    df_f1 = df_f1.copy()
     df_f1["TestSmell"] = df_f1["TestSmell"].map(test_smell_map)
     df_f1 = df_f1.sort_values("F1", ascending=True)
-    
+
     plt.figure(figsize=(10, 6))
-    
-    plt.barh(df_f1["TestSmell"], df_f1["F1"], 
-             xerr=[df_f1["F1"] - df_f1["F1_CI_Lower"], 
+
+    plt.barh(df_f1["TestSmell"], df_f1["F1"],
+             xerr=[df_f1["F1"] - df_f1["F1_CI_Lower"],
                    df_f1["F1_CI_Upper"] - df_f1["F1"]],
              color=sns.color_palette("Set2", len(df_f1)),
              capsize=5)
-    
+
     plt.xlabel("F1-score")
     plt.ylabel("Test Smell")
-    # plt.title("AromaLIA F1-score by Test Smell (95% CI)")
     plt.xlim(0, 1.05)
     plt.tight_layout()
     plt.savefig(output_path, format="pdf")
@@ -90,23 +91,20 @@ def plot_f1_bar_chart(df, output_path):
     print(f"✅ F1 bar chart saved to: {output_path}")
 
 
-def plot_smell_category_bar_chart(df, output_path):
-    """Create bar chart for difficulty by category of test smell."""
-    df["Category"] = df["TestSmell"].map(SMELL_CATEGORIES)
-    df_category = df.groupby("Category")[["F1", "F1_CI_Lower", "F1_CI_Upper"]].mean().reset_index()
-    df_category = df_category.sort_values("F1", ascending=True)
-    
+def plot_smell_category_bar_chart(df_category, output_path):
+    """Bar chart of category mean F1 with base-case clustered CIs."""
+    df_category = df_category.sort_values("F1", ascending=True).copy()
+
     plt.figure(figsize=(10, 6))
-    
+
     plt.barh(df_category["Category"], df_category["F1"],
              xerr=[df_category["F1"] - df_category["F1_CI_Lower"],
                    df_category["F1_CI_Upper"] - df_category["F1"]],
              color=sns.color_palette("Set2", len(df_category)),
              capsize=5)
-    
+
     plt.xlabel("F1-score")
     plt.ylabel("Smell Category")
-    # plt.title("AromaLIA F1-score by Smell Category (95% CI)")
     plt.xlim(0, 1.05)
     plt.tight_layout()
     plt.savefig(output_path, format="pdf")
@@ -162,12 +160,17 @@ def plot_heatmap(df, output_path):
 
 def main():
     df = load_metrics(METRICS_FILE)
+    smell_agg = load_metrics(SMELL_AGG_FILE)
+    category_agg = load_metrics(CATEGORY_AGG_FILE)
     if df is None or df.empty:
         print("❌ No data found. Please check input file path.")
         return
-    
-    plot_f1_bar_chart(df, OUTPUT_F1_BAR_CHART)
-    plot_smell_category_bar_chart(df, OUTPUT_SMELL_CATEGORY_BAR_CHART)
+    if smell_agg is None or smell_agg.empty or category_agg is None or category_agg.empty:
+        print("❌ Aggregated smell/category metrics missing. Run calculate_aromalia_metrics.py first.")
+        return
+
+    plot_f1_bar_chart(smell_agg, OUTPUT_F1_BAR_CHART)
+    plot_smell_category_bar_chart(category_agg, OUTPUT_SMELL_CATEGORY_BAR_CHART)
     plot_heatmap(df, OUTPUT_HEATMAP)
 
 

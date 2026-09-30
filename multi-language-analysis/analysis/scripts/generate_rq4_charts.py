@@ -24,6 +24,8 @@ SUMMARY_FILE = os.path.join(CURRENT_DIR, "..", "results", "test-smells-summary.c
 # Output chart paths
 OUTPUT_OVERALL_JAVA_CHART = os.path.join(CURRENT_DIR, "..", "results", "fig-rq4-overall-comparison-java.pdf")
 OUTPUT_OVERALL_PYTHON_CHART = os.path.join(CURRENT_DIR, "..", "results", "fig-rq4-overall-comparison-python.pdf")
+OUTPUT_FILE_DISAGREEMENT_CHART = os.path.join(CURRENT_DIR, "..", "results", "fig-rq4-file-disagreement.pdf")
+DISAGREEMENT_FILE = os.path.join(CURRENT_DIR, "..", "results", "rq4-file-level-disagreement.csv")
 
 # Tool mappings
 JAVA_TOOLS = {
@@ -148,6 +150,59 @@ def plot_overall_python_comparison(df, output_path):
     print(f"✅ Overall Python comparison chart saved to: {output_path}")
 
 
+def plot_file_disagreement(output_path):
+    """Grouped bar chart of file-level presence disagreement on overlapping Java files."""
+    if not os.path.exists(DISAGREEMENT_FILE):
+        raise FileNotFoundError(f"Disagreement file not found: {DISAGREEMENT_FILE}")
+
+    df = pd.read_csv(DISAGREEMENT_FILE)
+    presence = df[df["comparison"] == "java-file-presence"].copy()
+    order = [
+        ("MagicNumberTest", "Magic Number"),
+        ("ExceptionHandling", "Exception Handling"),
+        ("UnknownTest", "Unknown Test"),
+        ("AssertionRoulette", "Assertion Roulette"),
+        ("ConditionalTestLogic", "Conditional Test Logic"),
+    ]
+    labels, both, only_a, only_b = [], [], [], []
+    for key, label in order:
+        row = presence[presence["smell"] == key].iloc[0]
+        labels.append(label)
+        both.append(int(row["both"]))
+        only_a.append(int(row["only_aroma"]))
+        only_b.append(int(row["only_baseline"]))
+
+    x = np.arange(len(labels))
+    width = 0.25
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    bars1 = ax.bar(x - width, both, width, label="Both", color=COLOR_PALETTE[0])
+    bars2 = ax.bar(x, only_a, width, label="Only AromaLIA", color=COLOR_PALETTE[1])
+    bars3 = ax.bar(x + width, only_b, width, label="Only TSDETECT", color=COLOR_PALETTE[2])
+
+    for bars in (bars1, bars2, bars3):
+        for bar in bars:
+            height = bar.get_height()
+            ax.text(
+                bar.get_x() + bar.get_width() / 2.0,
+                height + 8,
+                f"{int(height)}",
+                ha="center",
+                va="bottom",
+                fontsize=8,
+            )
+
+    ax.set_ylabel("Files (of 1,510 overlapping Java tests)", fontsize=12)
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=15, ha="right")
+    ax.legend()
+    ax.grid(axis="y", alpha=0.3)
+    ax.set_ylim(0, max(both + only_a + only_b) * 1.12)
+    plt.tight_layout()
+    plt.savefig(output_path, format="pdf")
+    plt.close()
+    print(f"✅ File-level disagreement chart saved to: {output_path}")
+
+
 # === MAIN ===
 
 def main():
@@ -169,6 +224,12 @@ def main():
         plot_overall_python_comparison(df, OUTPUT_OVERALL_PYTHON_CHART)
     except Exception as e:
         print(f"❌ Error generating overall Python comparison chart: {e}")
+        return
+
+    try:
+        plot_file_disagreement(OUTPUT_FILE_DISAGREEMENT_CHART)
+    except Exception as e:
+        print(f"❌ Error generating file-disagreement chart: {e}")
         return
     
     print("\n✅ All RQ4 charts generated successfully!")

@@ -18,8 +18,10 @@ import seaborn as sns
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# AromaLIA baseline
-AROMALIA_FILE = os.path.join(CURRENT_DIR, "..", "results", "aromalia-global-overall-metrics.csv")
+# AromaLIA per-language metrics (matched to each baseline's language)
+AROMALIA_PER_LANGUAGE_FILE = os.path.join(
+    CURRENT_DIR, "..", "results", "aromalia-overall-per-language-metrics.csv"
+)
 
 # Other tools to compare against AromaLIA
 OTHER_TOOLS = ["xNose", "TSDETECT", "PyTest-Smell"]
@@ -35,6 +37,11 @@ TOOL_TO_LANGUAGE = {
     "TSDETECT": "Java",
     "PyTest-Smell": "Python"
 }
+TOOL_TO_LANGUAGE_KEY = {
+    "xNose": "csharp",
+    "TSDETECT": "java",
+    "PyTest-Smell": "python",
+}
 
 # Output chart path
 OUTPUT_BAR_CHART = os.path.join(CURRENT_DIR, "..", "results", "fig-rq1-tools-comparison-bar.pdf")
@@ -45,12 +52,14 @@ sns.set_theme(style="whitegrid", font_scale=1.1)
 
 # === FUNCTIONS ===
 
-def load_aromalia_metrics():
-    """Load AromaLIA metrics as baseline."""
-    if not os.path.exists(AROMALIA_FILE):
-        raise FileNotFoundError(f"AromaLIA metrics file not found: {AROMALIA_FILE}")
-    df = pd.read_csv(AROMALIA_FILE)
-    return df.iloc[0]  # Return first row as Series
+def load_aromalia_per_language():
+    """Load AromaLIA per-language metrics keyed by language code."""
+    if not os.path.exists(AROMALIA_PER_LANGUAGE_FILE):
+        raise FileNotFoundError(
+            f"AromaLIA metrics file not found: {AROMALIA_PER_LANGUAGE_FILE}"
+        )
+    df = pd.read_csv(AROMALIA_PER_LANGUAGE_FILE)
+    return {row["Language"]: row for _, row in df.iterrows()}
 
 
 def load_other_tool_metrics():
@@ -69,7 +78,7 @@ def load_other_tool_metrics():
     return combined
 
 
-def plot_bar_chart(aromalia_row, other_tools_df, output_path):
+def plot_bar_chart(aromalia_by_lang, other_tools_df, output_path):
     """Create bar chart comparing each tool against AromaLIA (F1 only) with 95% CI."""
     if other_tools_df.empty:
         print("❌ No other tools data found.")
@@ -99,6 +108,8 @@ def plot_bar_chart(aromalia_row, other_tools_df, output_path):
     # Draw bars for each tool comparison
     for tool_idx, (_, tool_row) in enumerate(other_tools_df.iterrows()):
         base_x = tool_idx * (group_width + 0.5)
+        lang_key = TOOL_TO_LANGUAGE_KEY[tool_row["Tool"]]
+        aromalia_row = aromalia_by_lang[lang_key]
         
         # AromaLIA bar (left side, hatched pattern)
         aromalia_x = base_x
@@ -175,7 +186,7 @@ def plot_bar_chart(aromalia_row, other_tools_df, output_path):
 
 def main():
     try:
-        aromalia_row = load_aromalia_metrics()
+        aromalia_by_lang = load_aromalia_per_language()
     except FileNotFoundError as e:
         print(f"❌ {e}")
         return
@@ -185,7 +196,7 @@ def main():
         print("❌ No other tools data found. Please check input file paths.")
         return
 
-    plot_bar_chart(aromalia_row, other_tools_df, OUTPUT_BAR_CHART)
+    plot_bar_chart(aromalia_by_lang, other_tools_df, OUTPUT_BAR_CHART)
 
 
 if __name__ == "__main__":
