@@ -13,6 +13,10 @@ function isSmellMap(value: unknown): value is SmellMap {
   return SMELLS.every((smell) => record[smell.id] === 0 || record[smell.id] === 1);
 }
 
+export function hasSelectedSmell(map: SmellMap): boolean {
+  return SMELLS.some((smell) => map[smell.id] === 1);
+}
+
 export function loadState(fileCount: number): LabelState {
   const fallback: LabelState = { index: 0, labels: {} };
   try {
@@ -22,7 +26,7 @@ export function loadState(fileCount: number): LabelState {
     const labels: Record<string, SmellMap> = {};
     if (parsed.labels && typeof parsed.labels === "object") {
       for (const [filename, value] of Object.entries(parsed.labels)) {
-        if (isSmellMap(value)) labels[filename] = value;
+        if (isSmellMap(value) && hasSelectedSmell(value)) labels[filename] = value;
       }
     }
     const index = typeof parsed.index === "number" && Number.isInteger(parsed.index) ? parsed.index : 0;

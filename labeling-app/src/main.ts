@@ -6,7 +6,7 @@ import "highlight.js/styles/github.css";
 import { downloadCsv, toCsv } from "./export";
 import sample from "./sample.json";
 import { SMELLS, type SmellId } from "./smells";
-import { loadState, saveState, smellMapFromChecks, type LabelState } from "./storage";
+import { hasSelectedSmell, loadState, saveState, smellMapFromChecks, type LabelState } from "./storage";
 import type { SampleFile } from "./types";
 import "./styles.css";
 
@@ -58,11 +58,15 @@ function persist(): void {
   saveState(state);
 }
 
+function currentMap() {
+  return smellMapFromChecks(new Map([...checks].map(([id, input]) => [id, input.checked])));
+}
+
 function readChecks(): void {
   const file = currentFile();
-  state.labels[file.filename] = smellMapFromChecks(
-    new Map([...checks].map(([id, input]) => [id, input.checked])),
-  );
+  const map = currentMap();
+  if (hasSelectedSmell(map)) state.labels[file.filename] = map;
+  else delete state.labels[file.filename];
   persist();
 }
 
@@ -83,8 +87,6 @@ function showFile(): void {
   }
 
   jump.value = String(state.index);
-  prevButton.disabled = state.index === 0;
-  nextButton.disabled = state.index === files.length - 1;
   silent = false;
   updateStatus();
 }
@@ -92,11 +94,16 @@ function showFile(): void {
 function updateStatus(): void {
   const reviewed = reviewedCount();
   const remaining = files.length - reviewed;
-  progress.textContent = `File ${state.index + 1} of ${files.length} · ${reviewed} reviewed`;
-  unreviewedNote.textContent =
-    remaining === 0
-      ? "Every file in the sample has a saved classification."
-      : `${remaining} file${remaining === 1 ? "" : "s"} not reviewed yet. They export as all zeros.`;
+  const currentDone = hasSelectedSmell(currentMap());
+  progress.textContent = `File ${state.index + 1} of ${files.length} · ${reviewed} done`;
+  prevButton.disabled = state.index === 0 || !currentDone;
+  nextButton.disabled = state.index === files.length - 1 || !currentDone;
+  nextButton.title = currentDone ? "" : "Select at least one smell first";
+  unreviewedNote.textContent = currentDone
+    ? remaining === 0
+      ? "Every file has at least one smell selected."
+      : `${remaining} file${remaining === 1 ? "" : "s"} still need at least one smell. Unfinished files export as all zeros.`
+    : "Select at least one smell. Every file has at least one, so this file stays unfinished until you do.";
 
   for (const option of jump.options) {
     const index = Number(option.value);
@@ -108,6 +115,13 @@ function updateStatus(): void {
 
 function goTo(index: number): void {
   if (index === state.index || index < 0 || index >= files.length) return;
+  if (!hasSelectedSmell(currentMap())) {
+    silent = true;
+    jump.value = String(state.index);
+    silent = false;
+    updateStatus();
+    return;
+  }
   readChecks();
   state.index = index;
   persist();
@@ -121,7 +135,7 @@ function build(root: HTMLDivElement): void {
     el(
       "p",
       "lede",
-      "Mark which of the 10 test smells are present. The 83 files were chosen once (42 Java, 41 Python) and stay the same between visits. Classifications are saved in this browser.",
+      "Mark which of the 10 test smells are present. Every file has at least one. The 83 files were chosen once (42 Java, 41 Python) and stay the same between visits. Classifications are saved in this browser.",
     ),
   );
 
@@ -217,7 +231,7 @@ function build(root: HTMLDivElement): void {
   smellHeading.append(el("h2", undefined, "Smells present"), definitionsButton);
   smellPanel.append(
     smellHeading,
-    el("p", "hint", "Check a smell when it exists in this file. Leave it unchecked when it does not."),
+    el("p", "hint", "Check every smell that exists. At least one is required before this file is done."),
     definitions,
   );
   const list = el("ul", "smell-list");
