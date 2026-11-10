@@ -1,0 +1,420 @@
+{
+  "seed": 20261110,
+  "files": [
+    {
+      "filename": "test_smell_022.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestCuckooHashTest:\n    def test_smell_022(self, map, load, expected_capacity):\n        print(\"Capacity: \", map.capacity(), \" HashFuncs: \", map.get_num_hash_funcs(), \" Buckets: \", map.get_num_buckets(), \" Load: \", load)\n        time = time.time()\n        keys = []\n        for i in range(int(map.capacity() * load)):\n            keys.append(LongKey(random.randint(0, 2**63 - 1)))\n\n        for i in range(len(keys)):\n            key = keys[i]\n            v = str(key.x)\n            map.put(key, v)\n            assert map.contains_key(key)\n            assert v == map.get(key)\n\n        for i in range(len(keys)):\n            key = keys[i]\n            v = str(key.x)\n            assert v == map.get(key)\n\n        assert expected_capacity == map.capacity()\n        duration = time.time() - time\n        print(duration, \" ms\")"
+    },
+    {
+      "filename": "TestSmell121.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell121 {\n\n    @Test\n    public void testIdadfFilterLt() {\n    }\n}"
+    },
+    {
+      "filename": "TestSmell042.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/joejensen8/Orange/blob/dac8bf7f4ed4120504e5652ddc0f79b7e1721e51/OpadTest.java#L137-L193\n\npublic class TestSmell042 {\n    @Test\n    public void testProcessExchange() throws Exception\n    {\n        // Test status OK and Result correct\n        Exchange.Builder b = new Exchange.Builder();\n        RequestStatus status = new RequestStatus();\n        b.addCompatible(new SerialNumber(new BigInteger(\"13\"))).addCompatible(new SerialNumber(new BigInteger(\"16\")));\n        Opad myOpad = new Opad(new SerialNumber(new BigInteger(\"15\")), Optional.empty());\n        try\n        {\n            Exchange exchange = b.build();\n            myOpad.process(exchange, status);\n            assertEquals(RequestStatus.StatusCode.OK, status.getStatusCode());\n            assertEquals(Optional.of(new BigInteger(\"13\")), status.getResult());\n        }catch(Exception e)\n        {\n            System.out.println(\"exception: \" + e);\n        }\n        // Test status FAIL and result empty\n        Exchange.Builder builder = new Exchange.Builder();\n        try\n        {\n            Exchange exchange = builder.build();\n            myOpad.process(exchange, status);\n            assertEquals(RequestStatus.StatusCode.FAIL, status.getStatusCode());\n            assertEquals(Optional.empty(), status.getResult());\n        }catch (Exception e)\n        {\n            System.out.println(\"exception: \" + e);\n        }\n        builder.addCompatible(new SerialNumber(new BigInteger(\"17\"))).addCompatible(new SerialNumber(new BigInteger(\"201\")));\n        try\n        {\n            Exchange exchange = builder.build();\n            myOpad.process(exchange, status);\n            assertEquals(RequestStatus.StatusCode.FAIL, status.getStatusCode());\n            assertEquals(Optional.empty(), status.getResult());\n        }catch (Exception e)\n        {\n            System.out.println(\"exception: \" + e);\n        }\n\n        // The following is the JUNIT test required in the SPEC\n        Exchange.Builder myBuilder = new Exchange.Builder();\n        myBuilder.addCompatible(new SerialNumber(new BigInteger(\"1032\"))).addCompatible(new SerialNumber(new BigInteger(\"1244\")));\n        myOpad = new Opad(new SerialNumber(new BigInteger(\"1048\")), Optional.empty());\n        try\n        {\n            Exchange exchange = myBuilder.build();\n            myOpad.process(exchange, status);\n            assertEquals(RequestStatus.StatusCode.OK, status.getStatusCode());\n            assertEquals(Optional.of(new BigInteger(\"1032\")), status.getResult());\n        }catch (Exception e)\n        {\n            System.out.println(\"exception: \" + e);\n        }\n    }\n}\n"
+    },
+    {
+      "filename": "test_smell_119.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/cdluminate/MyNotes/blob/d611f7a27988ad9213de835d5a55202268129a99/python3/demo_pytest.py#L3-L5https://github.com/cdluminate/MyNotes/blob/d611f7a27988ad9213de835d5a55202268129a99/python3/demo_pytest.py#L3-L5\n\n@pytest.mark.slow\ndef test_smell_119():\n    pass"
+    },
+    {
+      "filename": "test_smell_074.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestOoBeanTest:\n    def test_smell_074(self):\n        bean1 = OOoBean(PrivateLocalOfficeConnection(connection.get_component_context()))\n        bp1 = BeanPanel(bean1)\n        bean2 = OOoBean(PrivateLocalOfficeConnection(connection.get_component_context()))\n        bp2 = BeanPanel(bean2)\n        bean3 = OOoBean(PrivateLocalOfficeConnection(connection.get_component_context()))\n        bp3 = BeanPanel(bean3)\n        bean4 = OOoBean(PrivateLocalOfficeConnection(connection.get_component_context()))\n        bp4 = BeanPanel(bean4)\n\n        try:\n            f = Frame(\"OOoBean example with several instances\")\n            f.set_layout(GridBagLayout())\n            c = GridBagConstraints()\n            c.fill = GridBagConstraints.HORIZONTAL\n            c.weightx = 0.5\n\n            c.insets = Insets(0, 0, 0, 10)\n            c.gridx = 0\n            c.gridy = 0\n            f.add(bp1, c)\n\n            c.gridx = 1\n            c.insets = Insets(0, 0, 0, 0)\n            f.add(bp2, c)\n\n            c.gridx = 0\n            c.gridy = 1\n            c.insets = Insets(10, 0, 0, 10)\n            f.add(bp3, c)\n\n            c.gridx = 1\n            c.gridy = 1\n            c.insets = Insets(10, 0, 0, 0)\n            f.add(bp4, c)\n\n            f.pack()\n            f.set_bounds(0, 0, 1000, 600)\n            f.set_visible(True)\n            try:\n                bean1.load_from_url(\"private:factory/swriter\", None)\n                bean2.load_from_url(\"private:factory/swriter\", None)\n                bean3.load_from_url(\"private:factory/swriter\", None)\n                bean4.load_from_url(\"private:factory/swriter\", None)\n            except Exception as e:\n                print(e)\n            f.validate()\n\n            time.sleep(10)\n        finally:\n            bean1.stop_o_o_connection()\n            bean2.stop_o_o_connection()\n            bean3.stop_o_o_connection()\n            bean4.stop_o_o_connection()"
+    },
+    {
+      "filename": "TestSmell124.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\nimport org.xml.sax.SAXParseException;\n\npublic class TestSmell124 {\n\n    @Test\n    public void testEmptyInvalidWSDL() {\n        try {\n            // Simulating monkeypatch behavior\n            // Assuming locals() is a map-like structure in Java\n            // This part is not directly translatable, so we will skip it\n            \n            SAXParseException e = null;\n            try {\n                e = testutils.clientFromWsdl(new byte[]{});\n            } catch (SAXParseException ex) {\n                e = ex;\n            }\n            assertEquals(\"no element found\", e.getMessage());\n        } catch (Exception ex) {\n            // Handle exception if needed\n        }\n    }\n}"
+    },
+    {
+      "filename": "test_smell_050.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestFiguraplana:\n    @pytest.mark.skip\n    def test_smell_050(self):\n        assert False, \"Not yet implemented\""
+    },
+    {
+      "filename": "test_smell_081.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestDualTest:\n    def test_smell_081(self):\n        self.test_transcendentals(100)\n\n    def test_smell_081(self, value):\n        pass"
+    },
+    {
+      "filename": "TestSmell128.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell128 {\n\n    @Test\n    public void testDirectionAndValueOfPinIsResetWhenClosed() {\n        try (Pin pin = pins.pin(0, Out)) {\n            pin.setValue(1);\n        }\n\n        gpioAdmin(\"export\", 17, PullDown);\n        try {\n            assertEquals(\"0\\n\", contentOf(\"/sys/class/gpio/gpio17/value\"));\n            assertEquals(\"in\\n\", contentOf(\"/sys/class/gpio/gpio17/direction\"));\n        } finally {\n            gpioAdmin(\"unexport\", 17);\n        }\n    }\n}"
+    },
+    {
+      "filename": "test_smell_004.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestGitTest:\n    def test_smell_004(self):\n        g = Git()\n        g.initialize()\n        g.add_blob(\"a.txt\")\n        g.write_to_index()\n        reader = open(\"index\", \"r\")\n        line = reader.readline()\n        hm = g.hm\n        while line:\n            parts = line.split(\" : \")\n            assert len(parts) == 2\n            file_name = parts[0]\n            hash = parts[1]\n            assert file_name in hm\n            assert hm[file_name] == hash\n            line = reader.readline()\n        reader.close()"
+    },
+    {
+      "filename": "TestSmell012.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/gabrielseibel1/MusicSeibuilder/blob/e931ba43f8edab3ec38006ef8476e77425726952/SoundTest.java#L43-L53\n\npublic class TestSmell012 {\n    @Test\n    private void decOctaveTest() throws Exception{\n        Sound sound = new Sound();\n        assertEquals(5, sound.getOctave());\n\n        for (int i = 0; i < 6; i++){\n            sound.decOctave();\n        }\n        System.out.println(sound.getOctave());\n        assertEquals(0, sound.getOctave());\n    }\n}\n"
+    },
+    {
+      "filename": "TestSmell059.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/bennn/NLP/blob/7d0c90feeaac03308791641dc6c864e88eba2ed0/TrieTest.java#L101-L107\n\npublic class TestSmell059 {\n\t@Test\n\tpublic void ComplexTestEmpty() {\n\t\tassertTrue(complexT.isEmpty());\n\t\tassertEquals(0,complexT.getTotalFreq());\n\t\tassertEquals(0,complexT.getVocabularySize());\n\n\t}\n}\n"
+    },
+    {
+      "filename": "test_smell_116.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/Masterofowls/pythoncheat/blob/467d51b3cbc7d49f5decac34ac1c6a20d1418280/examples/pytest.py#L41-L44\n\n# Custom marker\n@pytest.mark.slow\ndef test_smell_116():\n    pass"
+    },
+    {
+      "filename": "test_smell_159.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/jeevika2407/pytest_demo2/blob/8729906a17de475c830596d7a829a7933ceccdc9/demo.py#L5-L6\n\ndef test_smell_159():\n    print(\"welcome\")"
+    },
+    {
+      "filename": "TestSmell116.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell116 {\n    @Test\n    public void testSlowOperation() {\n    }\n}"
+    },
+    {
+      "filename": "test_smell_044.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestArrayInversion:\n    @pytest.mark.skip(reason=\"coz it's not quick todo: to review\")\n    def test_smell_044(self):\n        file = \"resources/IntegerArray.txt\"\n        try:\n            list_ = MyArrayUtil.list_integer_from_file(file, 94650)\n            print(\"list size:\" + str(len(list_)))\n\n            A = MyArrayUtil.list_integers_to_integer_array(list_)\n\n            D_total = ArrayInversion.sort_and_count(A, len(A), 0, len(A) - 1)\n\n            D = D_total.get_left()\n\n            MyArrayUtil.check_array_integer_sorted(D)\n            print(\"expect \" + str(D_total.get_right()) + \" inversions\")\n            expected_inversions = ArrayInversion.brute_force_count(A)\n            assert expected_inversions == D_total.get_right()\n\n        except FileNotFoundError as e:\n            print(e)\n            assert False\n        except IOError as e:\n            print(e)\n            assert False"
+    },
+    {
+      "filename": "test_smell_166.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/fuatnku/seleniumhq.github.io/blob/76361bf094b4a044d1250079cb06f68dfb0a5027/examples/python/tests/browsers/test_firefox.py#L9-L13\n\ndef test_smell_166():\n    options = webdriver.FirefoxOptions()\n    driver = webdriver.Firefox(options=options)\n\n    driver.quit()"
+    },
+    {
+      "filename": "TestSmell014.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/blueseerERP/blueseer/blob/77d3e9cdd7f364ed556f982cbfa71eabf812c5bc/src/utilities/bsTest.java#L105-L119\n\npublic class TestSmell014 {\n   @Test\n   public void testEDI_856Idoc() {\n      try {\n          m = EDI.processFile(\"edi/sampledata/ACME_IDOC_SHIPMNT02out.txt\",\"\",\"\",\"\", false, false, 0, 0, \"\");\n          if (m[0].equals(\"0\")) {\n              System.out.println(\"sample 856idoc...  pass\");\n          } else {\n              System.out.println(\"sample 850idoc...  fail\");\n              System.out.println(\"m[1] message: \" + m[1]);\n          }\n      } catch (Exception e) {\n          System.out.println(\"BS Exception: \" + e.getMessage() );\n      }\n      assertEquals(\"0\",m[0]);\n   }\n}\n"
+    },
+    {
+      "filename": "test_smell_071.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestVoteTest:\n    def test_smell_071(self):\n        vote = Vote(2)\n        \n        def thread_function():\n            try:\n                time.sleep(1)\n                assert vote.vote(\"1\") == \"0\"\n            except InterruptedException as e:\n                raise AssertionError(e)\n\n        threads = []\n        for i in range(4):\n            thread = threading.Thread(target=thread_function)\n            threads.append(thread)\n            thread.start()\n\n        for thread in threads:\n            thread.join()\n\n        assert vote.vote(\"0\") == \"0\""
+    },
+    {
+      "filename": "test_smell_064.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestCellTest:\n    def test_smell_064(self):\n        assert 0.0 == pytest.approx(Cell.calculate_mean([]), rel=0.001), \"Mean of empty list should be 0.0\"\n        assert 0.0 == pytest.approx(Cell.calculate_mean(None), rel=0.001), \"Mean of null should be 0.0\"\n        assert 2.0 == pytest.approx(Cell.calculate_mean([1.0, 2.0, 3.0]), rel=0.001), \"Mean of test numbers should be 2.0\"\n"
+    },
+    {
+      "filename": "test_smell_161.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/wookayin/gpustat/blob/7a3b9644229681a752b560c6d4889929b9ea39d5/gpustat/test_gpustat.py#L623-L628\n\nclass TestGPUStat(object):\n\n    def test_smell_161(self, scenario_basic):\n        \"\"\"Test whether gpustat.main() works well.\n        The behavior is mocked exactly as in test_new_query_mocked().\n        \"\"\"\n        sys.argv = ['gpustat']\n        gpustat.main()"
+    },
+    {
+      "filename": "TestSmell077.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/lijtforgithub/study-spring/blob/a9016a4b8be9202a7b3071879fea719c2531136e/src/main/resources/old/activemq/JMSTest.java#L52-L74\n\npublic class TestSmell077 {\n    @Test\n    public void testSessionAwareMessageListener() {\n    \tthis.applicationContext = TestUtils.instanceContext(MODULE, CONFIG_SESSION);\n    \tProducerService producerService = this.applicationContext.getBean(ProducerService.class, \"producerService\");\n    \tDestination sessionAwareQueue = this.applicationContext.getBean(\"sessionAwareQueue\", Destination.class);\n    \t\n        producerService.sendMessage(sessionAwareQueue, \"测试SessionAwareMessageListener\");\n        \n        try {\n\t\t\tThread.sleep(1000);\n\t\t} catch (InterruptedException e) {\n\t\t\te.printStackTrace();\n\t\t}\n        \n        System.err.println(\"实例化一个消息监听容器，开始接收返回给生产者的消息...\");\n        \n        DefaultMessageListenerContainer continer = new DefaultMessageListenerContainer();\n        continer.setConnectionFactory(this.applicationContext.getBean(\"connectionFactory\", ConnectionFactory.class));\n        continer.setDestination(this.applicationContext.getBean(\"queue\", Destination.class));\n        continer.setMessageListener(new ConsumerMessageListener());\n        continer.initialize();\n        continer.start();\n    }\n}\n"
+    },
+    {
+      "filename": "TestSmell091.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.io.File;\n\npublic class TestSmell091 {\n\n    @Test\n    public void testMakedirs() {\n        Path d = new Path(tmpdir);\n\n        File tempf = new File(d.toString(), \"temp.txt\");\n        try {\n            tempf.createNewFile();\n            Path foo = new Path(d.toString(), \"foo\");\n            Path boz = new Path(foo.toString(), \"bar\", \"baz\", \"boz\");\n            boz.makedirs();\n            try {\n                assertTrue(boz.isdir());\n            } finally {\n                boz.removedirs();\n            }\n            assertFalse(foo.exists());\n            assertTrue(d.exists());\n\n            foo.mkdir(0750);\n            boz.makedirs(0700);\n            try {\n                assertTrue(boz.isdir());\n            } finally {\n                boz.removedirs();\n            }\n            assertFalse(foo.exists());\n            assertTrue(d.exists());\n        } finally {\n            tempf.delete();\n        }\n    }\n}"
+    },
+    {
+      "filename": "TestSmell062.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/muenchhausen/3wins/blob/57b86a71a57b9a62f811d7d568b11d9d676821fd/GameTest.java#L394-L402\n\npublic class TestSmell062 {\n    @Test\n    public void liklihood_to_win_should_return_0_58_in_the_left_column_in_a_5x5_playground()\n    {\n        Game game = new Game(n3winAlgorithm,CALCULATION_DEPTH);\n        Chip field[][] = new Chip[5][5];\n        double result=game.liklihoodToWin(0, field,1,Chip.GREEN);\n        assertEquals (0.40,result,0.01);\n        \n    }\n}\n"
+    },
+    {
+      "filename": "TestSmell100.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell100 {\n\n    @Test\n    public void test2() throws Exception {\n        for (int i = 0; i < 10; i++) {\n            client.send(\"hello \" + i);\n            Object data = client.receive();\n            if (data == null) {\n                System.out.println(\"connection closed\");\n                break;\n            }\n            System.out.println(\"received: \" + data);\n            Thread.sleep(100);\n            i += 1;\n        }\n        assertEquals(true, true);\n    }\n}"
+    },
+    {
+      "filename": "test_smell_083.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestDualTest:\n    def test_smell_083(self):\n        self.test_horner_rule(1000000)\n"
+    },
+    {
+      "filename": "TestSmell021.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/vigusmao/Comp2_2020_PLE/blob/f38a995ff51ade221cdca4c6b72b98b88f13d9ef/Siguinha/src/testes/AlunoTest.java#L48-L84\n\npublic class TestSmell021 {\n    @Test\n    public void getConclusaoDiscipinaTest() {\n        ArrayList<ItemDeHistorico> historico = aluno.getHistorico();\n        assertNotNull(historico);\n        for (int i = 0; i < historico.size(); i++) {\n            assertNull(historico.get(i));\n        }\n        assertEquals(0, aluno.getQuantDisciplinasCursadas());\n\n        // o aluno vai cursar a primeira disciplina\n        aluno.registrarConclusaoDisciplina(disciplina1, 6.5f, 2019, 2);\n\n        historico = aluno.getHistorico();\n        ItemDeHistoricoDisciplinaCursada primeiroItem = (ItemDeHistoricoDisciplinaCursada) historico.get(0);\n        assertEquals(\"MAB001\", primeiroItem.getDisciplina().getCodigo());\n        assertEquals(2019, primeiroItem.getAno());\n        assertEquals(2, primeiroItem.getSemestre());\n        verificarAtualizacaoCreditos(1, 6.5f, 4);\n\n        aluno.registrarConclusaoDisciplina(disciplina2, 8, 2020, 1);\n        // verificar todas as disciplinas do histórico até aqui\n        historico = aluno.getHistorico();\n        assertEquals(\"MAB001\", primeiroItem.getDisciplina().getCodigo());\n        ItemDeHistoricoDisciplinaCursada segundoItem = (ItemDeHistoricoDisciplinaCursada) historico.get(1);\n        assertEquals(\"MAB002\", segundoItem.getDisciplina().getCodigo());\n        verificarAtualizacaoCreditos(2, 7.4f, 10);\n\n        // o aluno vai cursar a terceira disciplina\n        aluno.registrarConclusaoDisciplina(disciplina3, 10, 2020, 1);\n\n        historico = aluno.getHistorico();\n        assertEquals(\"MAB001\", primeiroItem.getDisciplina().getCodigo());\n        assertEquals(\"MAB002\", segundoItem.getDisciplina().getCodigo());\n        ItemDeHistoricoDisciplinaCursada terceiroItem = (ItemDeHistoricoDisciplinaCursada) historico.get(2);\n        assertEquals(\"MAJ003\", terceiroItem.getDisciplina().getCodigo());\n        verificarAtualizacaoCreditos(3, 8.375f, 16);\n    }\n}\n"
+    },
+    {
+      "filename": "test_smell_008.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestArrayinversion:\n    @pytest.mark.skip(reason=\"coz it's not quick todo: to review\")\n    def test_smell_008(self):\n        file = \"resources/IntegerArray.txt\"\n        try:\n            list_ = MyArrayUtil.list_integer_from_file(file, 93000)\n\n            A = MyArrayUtil.list_integers_to_integer_array(list_)\n\n            D_total = ArrayInversion.sort_and_count(A, len(A), 0, len(A) - 1)\n\n            D = D_total.get_left()\n\n            MyArrayUtil.check_array_integer_sorted(D)\n\n            expected_inversions = ArrayInversion.brute_force_count(A)\n            print(\"-------------------------------------------\")\n            print(\"ArrayInversionTest.testSortAndCount() expect \" + str(expected_inversions) + \" inversions\")\n            print(\"-------------------------------------------\")\n            assert expected_inversions == D_total.get_right()\n\n        except FileNotFoundError as e:\n            print(e)\n            assert False\n        except IOError as e:\n            print(e)\n            assert False"
+    },
+    {
+      "filename": "test_smell_019.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestOoBeanTest:\n    def test_smell_019(self):\n        f = None\n        try:\n            f = WriterFrame(100, 100, 500, 300, False, connection.get_component_context())\n            b = f.get_bean()\n            for i in range(100):\n                b.release_system_window()\n                b.aquire_system_window()\n            assert f.check_uno_frame_position()\n        except AssertionError:\n            assert False, \"Sizing error.\"\n        finally:\n            if f is not None:\n                f.dispose()\n            if not is_windows():\n                time.sleep(10)"
+    },
+    {
+      "filename": "test_smell_078.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestOoBean:\n    def test_smell_078(self):\n        f = None\n        try:\n            f = WriterFrame(100, 100, 500, 400, False, connection.get_component_context())\n            f.set_text(\"OOoBean test.\")\n            time.sleep(1)\n        finally:\n            if f is not None:\n                f.dispose()"
+    },
+    {
+      "filename": "TestSmell103.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell103 {\n\n    @Test\n    public void testArgsCommandlineShowOptions() {\n        String captureOutput = this.captureOutput();\n        System.out.println(\"\");\n\n        String[] testOpts = new String[]{\n            \"-a\", \"-c\", \"-u\", \"-p\", \"-e\", \"-P\", \"-f\",\n            \"-e\", \"\", \"-P\", \"\",\n            \"-e\", \"enc,dec\", \"-Plimit,draw\",\n            \"-cup\", \"-cpu\", \"-cufP\"\n        };\n\n        for (String opt : testOpts) {\n            String[] options;\n            if (opt instanceof String) {\n                options = new String[]{opt};\n            } else {\n                options = (String[]) opt;\n            }\n\n            System.out.print(\"\\u001B[30m\\u001B[43m\" + \"$ gpustat \" + String.join(\" \", options) + \"\\u001B(B\\u001B[m\");\n            String s = captureOutput(\"gpustat\", options);\n\n            // TODO: Validate output without hardcoding expected outputs\n            System.out.println(s);\n        }\n\n        // Finally, unknown args\n        try {\n            captureOutput(\"gpustat\", \"--unrecognized-args-in-test\");\n            fail(\"Expected AssertionError\");\n        } catch (AssertionError e) {\n            // Expected exception\n        }\n    }\n}"
+    },
+    {
+      "filename": "TestSmell079.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/adamldavis/hellojava8/blob/65cc59228b43a1e722f8f662499b7c55979d7b44/TailTest.java#L55-L58\n\npublic class TestSmell079 {\n\t@Test\n\tpublic void should_not_throw_stack_overflow() {\n\t\tTail.streamFactorial(56789);\n\t}\n}\n"
+    },
+    {
+      "filename": "test_smell_035.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestGamesTest:\n    def test_smell_035(self):\n        pass"
+    },
+    {
+      "filename": "TestSmell137.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport org.junit.Ignore;\nimport static org.junit.Assert.*;\n\npublic class TestSmell137 {\n\n    @Test\n    @Ignore(\"Disabled on non-64-bit environments\")\n    public void testFrameToJsonFloatPrecision() {\n        double value = 0.95;\n        int precision = 1;\n        String expectedVal = \"1.0\";\n        DataFrame df = new DataFrame(new Object[][]{{value}});\n        String encoded = df.toJson(precision);\n        assertEquals(expectedVal, encoded);\n\n        value = 1.95;\n        expectedVal = \"2.0\";\n        df = new DataFrame(new Object[][]{{value}});\n        encoded = df.toJson(precision);\n        assertEquals(expectedVal, encoded);\n\n        value = -1.95;\n        expectedVal = \"-2.0\";\n        df = new DataFrame(new Object[][]{{value}});\n        encoded = df.toJson(precision);\n        assertEquals(expectedVal, encoded);\n\n        value = 0.995;\n        precision = 2;\n        expectedVal = \"1.0\";\n        df = new DataFrame(new Object[][]{{value}});\n        encoded = df.toJson(precision);\n        assertEquals(expectedVal, encoded);\n\n        value = 0.9995;\n        precision = 3;\n        expectedVal = \"1.0\";\n        df = new DataFrame(new Object[][]{{value}});\n        encoded = df.toJson(precision);\n        assertEquals(expectedVal, encoded);\n\n        value = 0.99999999999999944;\n        precision = 15;\n        expectedVal = \"1.0\";\n        df = new DataFrame(new Object[][]{{value}});\n        encoded = df.toJson(precision);\n        assertEquals(expectedVal, encoded);\n    }\n}"
+    },
+    {
+      "filename": "TestSmell104.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.Iterator;\n\npublic class TestSmell104 {\n\n    @Test\n    public void testDiminishChromaSet() {\n        Iterator<Combination> combinations = new Combinations(ophis.westernChromaSet, 3).iterator();\n        while (combinations.hasNext()) {\n            Combination combination = combinations.next();\n            ChromaSet s = new ChromaSet(Set.of(combination.getX(), combination.getY(), combination.getZ()));\n            ChromaSet sDim = s.diminish();\n            for (Chroma chroma : s) {\n                assertTrue(sDim.contains(chroma.diminish()));\n            }\n        }\n    }\n}"
+    },
+    {
+      "filename": "test_smell_001.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestUnitTest:\n    def test_smell_001(self):\n        locations = FileIO.read_location_file(\"location.csv\")\n\n        assert locations.peek_first().get_name() == \"Perth\"\n\n        map = FileIO.read_distance_file(\"distances.csv\", locations)\n\n        assert locations.get_count() == 14\n        assert map.get_node_count() == 11\n        assert map.get_edge_count() == 62\n\n        temp = map.get_edges().peek_first().find_weight(\"walk\").get_length()\n        assert temp == pytest.approx(13.1, rel=0.0001)\n\n        temp1 = map.get_edges().peek_first().find_weight(\"car\").get_pk_time()\n        assert temp1 == 24"
+    },
+    {
+      "filename": "TestSmell142.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell142 {\n\n    @Test\n    public void testKMeansFunction() {\n        // test calling the k_means function directly\n        double[][] clusterCenters = new double[nClusters][nFeatures];\n        int[] labels = new int[X.length];\n        double inertia = kMeans(X, nClusters, null, globalRandomSeed, clusterCenters, labels);\n\n        assertEquals(new int[]{nClusters, nFeatures}, clusterCenters.shape());\n        assertEquals(nClusters, unique(labels).length);\n\n        // check that the labels assignment are perfect (up to a permutation)\n        assertEquals(1.0, vMeasureScore(trueLabels, labels), 0.0);\n        assertTrue(inertia > 0.0);\n    }\n}"
+    },
+    {
+      "filename": "TestSmell140.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell140 {\n\n    @Test\n    public void testStringCallback() {\n        Object f = this.module.getClass().getMethod(\"string_callback\").invoke(this.module);\n        int r = (int) f.invoke((String code) -> {\n            if (code.equals(\"r\")) {\n                return 0;\n            } else {\n                return 1;\n            }\n        });\n        assertEquals(0, r);\n    }\n}"
+    },
+    {
+      "filename": "TestSmell122.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.concurrent.ExecutorService;\nimport java.util.concurrent.Executors;\n\npublic class TestSmell122 {\n\n    @Test\n    public void testThreadSafety() {\n        List<String> errors = new ArrayList<>();\n\n        Runnable cb = new Runnable() {\n            @Override\n            public void run() {\n                try {\n                    Thread.sleep(1e-3);\n                    int r = module.t(() -> 123);\n                    assertEquals(123, r);\n                } catch (InterruptedException e) {\n                    Thread.currentThread().interrupt();\n                }\n            }\n        };\n\n        Runnable runner = new Runnable() {\n            @Override\n            public void run() {\n                try {\n                    for (int j = 0; j < 50; j++) {\n                        int r = module.t(cb);\n                        assertEquals(42, r);\n                        checkFunction(\"t\");\n                    }\n                } catch (Exception e) {\n                    errors.add(e.toString());\n                }\n            }\n        };\n\n        ExecutorService executor = Executors.newFixedThreadPool(20);\n        for (String arg : new String[]{\"t\", \"t2\"}) {\n            for (int n = 0; n < 20; n++) {\n                executor.submit(runner);\n            }\n        }\n        executor.shutdown();\n        while (!executor.isTerminated()) {}\n\n        String errorMessages = String.join(\"\\n\\n\", errors);\n        if (!errorMessages.isEmpty()) {\n            throw new AssertionError(errorMessages);\n        }\n    }\n}"
+    },
+    {
+      "filename": "TestSmell053.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/Code-Connect/TUM_Homework/blob/02f466c543b40c22b76b375f929db2025a8a1e32/src/pgdp16/blatt12/rock/PlayerTest.java#L53-L59\n\npublic class TestSmell053 {\n    @Test(timeout = 10000)\n    @Ignore //optional\n    public void interrupt_withoutGetChoice_givenRunning() throws Exception {\n        Thread thread = arrangeNewGame();\n\n        assertInterrupt(thread);\n    }\n}\n"
+    },
+    {
+      "filename": "test_smell_128.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/romilly/quick2wire-python-api/blob/c5e21e9d804012efd9d214d18909034b4b898c96/quick2wire/test_gpio.py#L80-L89\n\nclass TestGPIO:\n\n    def test_smell_128(self):\n        with pins.pin(0, Out) as pin:\n            pin.value = 1\n        \n        gpio_admin(\"export\", 17, PullDown)\n        try:\n            assert content_of('/sys/class/gpio/gpio17/value') == '0\\n'\n            assert content_of('/sys/class/gpio/gpio17/direction') == 'in\\n'\n        finally:\n            gpio_admin(\"unexport\", 17)"
+    },
+    {
+      "filename": "test_smell_038.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestA:\n    def test_smell_038(self):\n        pass"
+    },
+    {
+      "filename": "TestSmell165.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell165 {\n\n    @Test\n    public void testConstructionFromNone() {\n        try {\n            Path(null);\n        } catch (TypeError e) {\n            // expected\n        } catch (Exception e) {\n            throw new RuntimeException(\"DID NOT RAISE\");\n        }\n    }\n}"
+    },
+    {
+      "filename": "TestSmell024.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/henrytxz/Algo/blob/f0b186aa128ebd01835013f432b793593c4a0e6d/slowTests/not_quick/ArrayInversionTest.java#L82-L108\n\npublic class TestSmell024 {\n    @Ignore //coz it's not quick todo: to review\n    @Test\n    public void testBigIntegerSortAndCount() throws Exception {\n        File file = new File(\"resources/IntegerArray.txt\");\n        try {\n            List<Integer> list = MyArrayUtil.ListIntegerFromFile(file);\n\n            Integer[] A = MyArrayUtil.ListIntegersToIntegerArray(list);\n\n            Pair<Integer[],Integer> D_total = ArrayInversion.SortAndCount(A, A.length, 0, A.length-1);\n\n            Integer[] D = D_total.getLeft();\n\n            MyArrayUtil.checkArrayIntegerSorted(D);\n\n            BigInteger expectedInversions = ArrayInversion.BigInteger_bruteForceCount(A);\n            System.out.println(\"expect \"+expectedInversions+\" inversions\");\n//            Assert.assertEquals(expectedInversions, (int) D_total.getRight());\n\n        } catch (FileNotFoundException e) {\n            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.\n            Assert.fail();\n        } catch (IOException e) {\n            e.printStackTrace();\n            Assert.fail();\n        }\n    }\n}\n"
+    },
+    {
+      "filename": "TestSmell036.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/vigusmao/Comp2_2020_PLE/blob/f38a995ff51ade221cdca4c6b72b98b88f13d9ef/Siguinha/src/testes/AlunoTest.java#L42-L46\n\npublic class TestSmell036 {\n    @Ignore\n    @Test\n    public void getCraTest() {\n\n    }\n}\n"
+    },
+    {
+      "filename": "test_smell_108.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/romilly/quick2wire-python-api/blob/c5e21e9d804012efd9d214d18909034b4b898c96/quick2wire/test_gpio.py#L56-L64\n\nclass TestGPIO:\n\n    def test_smell_108(self):\n        pin = pins.pin(0, Out)\n        \n        assert pin.direction == Out\n        assert not os.path.exists(\"/sys/class/gpio/gpio17/direction\")\n        \n        with pin:\n            assert content_of(\"/sys/class/gpio/gpio17/direction\") == \"out\\n\"\n            assert pin.direction == Out"
+    },
+    {
+      "filename": "test_smell_006.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestWeibo:\n    def test_smell_006(self):\n        assert weibo.get_favorites() is not None\n        assert weibo.get_favorites(2) is not None\n        id = 4052331047\n        assert weibo.create_favorite(id) is not None\n        import time\n        time.sleep(1)\n        assert weibo.destroy_favorite(id) is not None"
+    },
+    {
+      "filename": "test_smell_056.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestFastMath:\n    @pytest.mark.skip\n    def test_smell_056(self):\n        self.compare_class_methods(FastMath, StrictMath)\n\n    def compare_class_methods(self, class1, class2):\n        pass"
+    },
+    {
+      "filename": "test_smell_034.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestAaatest:\n    def test_smell_034(self):\n        pass"
+    },
+    {
+      "filename": "test_smell_140.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/pavankethavath/Car_dekho_car_price_prediction/blob/11acbb69e613bc46bd9af2863d52ccfbe5669ffc/venv/Lib/site-packages/~umpy/f2py/tests/test_callback.py#L88-L99\n\nclass TestA:\n    @pytest.mark.skipif(sys.platform == 'win32',\n                        reason='Fails with MinGW64 Gfortran (Issue #9673)')\n    def test_smell_140(self):\n        def callback(code):\n            if code == \"r\":\n                return 0\n            else:\n                return 1\n\n        f = getattr(self.module, \"string_callback\")\n        r = f(callback)\n        assert r == 0"
+    },
+    {
+      "filename": "test_smell_021.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestAluno:\n    def test_smell_021(self):\n        historico = aluno.get_historico()\n        assert historico is not None\n        for i in range(len(historico)):\n            assert historico[i] is None\n        assert aluno.get_quant_disciplinas_cursadas() == 0\n\n        aluno.registrar_conclusao_disciplina(disciplina1, 6.5, 2019, 2)\n\n        historico = aluno.get_historico()\n        primeiro_item = historico[0]\n        assert primeiro_item.get_disciplina().get_codigo() == \"MAB001\"\n        assert primeiro_item.get_ano() == 2019\n        assert primeiro_item.get_semestre() == 2\n        self.verificar_atualizacao_creditos(1, 6.5, 4)\n\n        aluno.registrar_conclusao_disciplina(disciplina2, 8, 2020, 1)\n        historico = aluno.get_historico()\n        assert primeiro_item.get_disciplina().get_codigo() == \"MAB001\"\n        segundo_item = historico[1]\n        assert segundo_item.get_disciplina().get_codigo() == \"MAB002\"\n        self.verificar_atualizacao_creditos(2, 7.4, 10)\n\n        aluno.registrar_conclusao_disciplina(disciplina3, 10, 2020, 1)\n\n        historico = aluno.get_historico()\n        assert primeiro_item.get_disciplina().get_codigo() == \"MAB001\"\n        assert segundo_item.get_disciplina().get_codigo() == \"MAB002\"\n        terceiro_item = historico[2]\n        assert terceiro_item.get_disciplina().get_codigo() == \"MAJ003\"\n        self.verificar_atualizacao_creditos(3, 8.375, 16)\n\n    def verificar_atualizacao_creditos(self, arg1, arg2, arg3):\n        pass"
+    },
+    {
+      "filename": "test_smell_147.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/Ranack/twit_sentiments/blob/e0aca8c7d97b34dbd268a5295598b29296546d4b/test_api.py#L32-L48\n\ndef test_smell_147(headers):\n    \"\"\"Test avec un texte négatif.\"\"\"\n    data = {\"text\": \"I hate this product!\"}\n\n    # Envoi de la requête POST\n    response = requests.post(BASE_URL, json=data, headers=headers)\n\n    # Afficher la réponse brute pour le débogage\n    print(f\"Response: {response.text}\")\n\n    # Vérification du code de statut\n    assert response.status_code == 200, f\"Expected 200, got {response.status_code} - {response.text}\"\n\n    # Vérification de la réponse JSON\n    response_json = response.json()\n    assert \"predicted_label\" in response_json, \"Response missing 'predicted_label'\"\n    assert \"confidence\" in response_json, \"Response missing 'confidence'\""
+    },
+    {
+      "filename": "TestSmell048.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/alibaba/alios-libreoffice/blob/e9a6cc08a12b5133a9dccf337d16f9a534f57f1e/bean/qa/complex/bean/OOoBeanTest.java#L324-L371\n\npublic class TestSmell048 {\n    @Test public void test5() throws Exception\n    {\n        WriterFrame f = null;\n        try\n        {\n            f = new WriterFrame(100, 100, 500, 400, false, connection.getComponentContext());\n            f.goToStart();\n            f.pageDown();\n            Thread.sleep(1000);\n\n            ScreenComparer capturer = new ScreenComparer(100,100,500,400);\n            capturer.grabOne();\n            for (int i = 0; i < 100; i++)\n            {\n                f.removeOOoBean();\n                f.addOOoBean();\n            }\n\n            f.goToStart();\n            f.pageDown();\n            Thread.sleep(getSleepTime(200));\n            capturer.grabTwo();\n\n            if (!capturer.compare())\n            {\n                fail(\"Painting error: adding and removing OOoBean \" +\n                       \"repeatedly to java.lang.Frame.\");\n                capturer.writeImages();\n            }\n\n            if (!f.checkUnoFramePosition())\n            {\n                fail(\"Sizing error.\");\n            }\n\n        }\n        finally\n        {\n            if (f != null)\n            {\n                f.dispose();\n            }\n            if (!isWindows())\n            {\n                Thread.sleep(10000);\n            }\n        }\n    }\n}\n"
+    },
+    {
+      "filename": "TestSmell047.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/JennsiS/Data-Structures-Profiler/blob/6eb9016dd80c6c32502e67087f33d59a74e8e6d7/MainTest.java#L9-L18\n\npublic class TestSmell047 {\n    @Test\n    public void main() {\n        try {\n            new FileNotFoundException();\n            fail(\"Exception not thrown\");\n        } catch (UnsupportedOperationException e) {\n            assertEquals(\"Operation Not Supported\", e.getMessage());\n        }\n\n    }\n}\n"
+    },
+    {
+      "filename": "test_smell_164.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/ibmdbanalytics/ibmdbpy/blob/c7f1cd3892b609644e3d68fcbdec151ac4634612/ibmdbpy/tests/test_frame.py#L188-L189\n\nclass Test_IdaDataFrameBehavior(object):\n\n    def test_smell_164(self, idadf):\n        pass"
+    },
+    {
+      "filename": "test_smell_106.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/bofm/python-caching/blob/16de50c119f8896e923e3f10488ecf6ffe535f45/tests/test_cache.py#L330-L368\n\ndef test_smell_106():\n\n    x = 2\n    call_count = 0\n    raised = False\n    n = 0\n\n    @Cache(only_on_errors=(ZeroDivisionError, ConnectionError))\n    def fn():\n        nonlocal x, n, call_count, raised\n        call_count += 1\n        try:\n            0 / x\n        except ZeroDivisionError:\n            raised = True\n            raise\n        n += 1\n        x -= 1\n        return n\n\n    assert fn() == 1\n    assert call_count == 1\n    assert fn() == 2\n    assert call_count == 2\n    assert x == 0\n    assert fn() == 2  # ZeroDivision and returning cached result\n    assert call_count == 3\n    assert raised\n    assert fn() == 2\n    x = 1\n    raised = False\n    assert fn() == 3\n    assert call_count == 5\n    assert fn() == 3  # ZeroDivision and returning cached result\n    assert raised\n    assert call_count == 6\n    fn._cache.clear()\n    with pytest.raises(ZeroDivisionError):\n        fn()"
+    },
+    {
+      "filename": "TestSmell068.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/AvinRai/CPUMarketplace/blob/c115187244db4da5c6748535ee749930ea35c98d/src/QueueTest.java#L108-L127\n\npublic class TestSmell068 {\n    @Test\n    void testEqualsObject() {\n        setUp();\n        assertTrue(q1.equals(q1));\n        assertFalse(q1.equals(new String(\"A B C D E F G H I J K L\")));\n        for(int i = 0; i < 9; i++) {\n            q1.dequeue();\n        }\n        System.out.println(q1);\n        Queue<String> test = new Queue<>();\n        test.enqueue(new String(\"J\"));\n        test.enqueue(new String(\"K\"));\n        test.enqueue(new String(\"L\"));\n        assertTrue(q1.equals(test));\n        test.dequeue();\n        assertFalse(q1.equals(test));\n        Queue<Double> test2 = new Queue<>(new Double[]{1.1, 2.2, 3.2, 4.4});\n        assertFalse(test2.equals(q3));\n        assertFalse(test2.equals(test));\n    }\n}\n"
+    },
+    {
+      "filename": "test_smell_099.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/ogrisel/scikit-learn/blob/b20998d4ec606558ae86cba7ff5a84aea094c397/sklearn/cluster/tests/test_k_means.py#L381-L405\n\n@pytest.mark.parametrize(\"algorithm\", [\"lloyd\", \"elkan\"])\n@pytest.mark.parametrize(\"tol\", [1e-2, 0])\ndef test_smell_099(algorithm, tol, capsys):\n    # Check verbose mode of KMeans for better coverage.\n    X = np.random.RandomState(0).normal(size=(5000, 10))\n\n    KMeans(\n        algorithm=algorithm,\n        n_clusters=n_clusters,\n        random_state=42,\n        init=\"random\",\n        n_init=1,\n        tol=tol,\n        verbose=1,\n    ).fit(X)\n\n    captured = capsys.readouterr()\n\n    assert re.search(r\"Initialization complete\", captured.out)\n    assert re.search(r\"Iteration [0-9]+, inertia\", captured.out)\n\n    if tol == 0:\n        assert re.search(r\"strict convergence\", captured.out)\n    else:\n        assert re.search(r\"center shift .* within tolerance\", captured.out)"
+    },
+    {
+      "filename": "test_smell_113.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/RKrahl/pytest-dependency/blob/0c083df1ff2ebc253777ccd20cc3013dddec3e74/doc/examples/nodeid.py#L4-L5\n\ndef test_smell_113():\n    pass"
+    },
+    {
+      "filename": "TestSmell040.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/MaximeAttevall/AdventureGame/blob/dd9997a20b2270a6c5dd80e995b442250bd64088/funcTest.java#L15-L36\n\npublic class TestSmell040 {\n    @Test\n    public void testReadJsonFromFile() {\n        // Anta att JSON-filen finns och innehåller en giltig sträng\n        String fakeJsonData = \"Deathcounter: 0\";\n        try {\n            // Skapa en temporär fil med testdata\n            Path tempFilePath = Files.createTempFile(\"tempTestFile\", \".json\");\n            Files.write(tempFilePath, fakeJsonData.getBytes());\n\n            // Testa att läsa från filen\n            int result = func.readJsonFromFile();\n\n            // Kontrollerar att resultatet är 0 baserat på det falska JSON-data som skapades\n            assertEquals(0, result);\n\n            // Radera den temporära filen efter testet\n            Files.delete(tempFilePath);\n        } catch (IOException e) {\n            // Fångar IOException om det uppstår\n            e.printStackTrace();\n        }\n    }\n}\n"
+    },
+    {
+      "filename": "test_smell_112.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/cofob/save-my-pass-pls/blob/dcd878c3adfef12c4f04e1bbbed043846fd81c15/test_.py#L4-L5\n\ndef test_smell_112():\n    pass"
+    },
+    {
+      "filename": "TestSmell164.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell164 {\n\n    @Test\n    public void testIdadfDelitem() {\n    }\n}"
+    },
+    {
+      "filename": "TestSmell155.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\nimport org.openqa.selenium.By;\nimport org.openqa.selenium.WebDriver;\nimport org.openqa.selenium.WebElement;\nimport org.openqa.selenium.support.ui.ExpectedConditions;\nimport org.openqa.selenium.support.ui.WebDriverWait;\n\npublic class TestSmell155 {\n\n    @Test\n    public void testAddPost(WebDriver site, String xSelector1, String xSelector2, String btnSelector, String createBtn, String postTitleInput, String postDescriptionInput, String postContentInput, String postSaveBtn, String postTitleSelector) {\n        WebElement createPostBtn = site.findElement(By.cssSelector(createBtn));\n        createPostBtn.click();\n        try {\n            Thread.sleep(testdata.get(\"wait\"));\n        } catch (InterruptedException e) {\n            e.printStackTrace();\n        }\n\n        WebElement titleInput = site.findElement(By.xpath(postTitleInput));\n        titleInput.sendKeys(postTitle);\n\n        WebElement descriptionInput = site.findElement(By.xpath(postDescriptionInput));\n        descriptionInput.sendKeys(postDescription);\n\n        WebElement contentInput = site.findElement(By.xpath(postContentInput));\n        contentInput.sendKeys(postContent);\n        try {\n            Thread.sleep(testdata.get(\"wait\"));\n        } catch (InterruptedException e) {\n            e.printStackTrace();\n        }\n\n        WebDriverWait wait = new WebDriverWait(site, 10);\n        WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(postSaveBtn)));\n        saveButton.click();\n\n        WebElement savedPostTitle = wait.until(\n            ExpectedConditions.presenceOfElementLocated(By.xpath(\"//h1[text()='\" + postTitle + \"']\"))\n        );\n\n        WebElement postTitleElement = site.findElement(By.xpath(postTitleSelector));\n        assertEquals(postTitle, postTitleElement.getText());\n    }\n}"
+    },
+    {
+      "filename": "TestSmell139.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell139 {\n\n    @Test\n    public void testPluginLoadingAndUsage() {\n        ThreadSafeScheduler scheduler = new ThreadSafeScheduler();\n        List<String> results = new ArrayList<>();\n        \n        scheduler.loadPlugin(\"p1\", results::add);\n        \n        scheduler.schedule(\"jobp\", () -> scheduler.getPlugins().get(\"p1\").accept(\"ok\"), 1);\n        scheduler.scheduleOneOff(\"onep\", () -> scheduler.getPlugins().get(\"p1\").accept(\"ok\"), \n            LocalDateTime.now().plusSeconds(1));\n        \n        try {\n            Thread.sleep(1100);\n        } catch (InterruptedException e) {\n            Thread.currentThread().interrupt();\n        }\n        \n        scheduler.runPending();\n        \n        try {\n            Thread.sleep(100);\n        } catch (InterruptedException e) {\n            Thread.currentThread().interrupt();\n        }\n        \n        assertEquals(2, Collections.frequency(results, \"ok\"));\n    }\n}"
+    },
+    {
+      "filename": "TestSmell017.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/emmai89/Assignment/blob/2ec0af36a6cde4db003a09dbf18ba1ffcf1b1ffa/UnitTest.java#L19-L37\n\npublic class TestSmell017 {\n   @Test\n   public void testLinkedList1()\n   {\n      int ii;\n      for(ii = 0; ii < 20; ii++)\n      {\n         list.insertLast(ii);\n      }\n      assertEquals(list.getCount(), 20);\n\n      ii = 0;\n      while(!list.isEmpty())\n      {\n         int test = list.removeFirst();\n         assertEquals(test, ii);\n         ii++;\n      }\n      assertEquals(list.getCount(), 0);\n   }\n}\n"
+    },
+    {
+      "filename": "test_smell_013.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestTrie:\n    def test_smell_013(self):\n        simple_t.insert_all(list(to_insert))\n        word_map = {}\n        for i in range(len(to_insert)):\n            if to_insert[i] in word_map:\n                freq = word_map[to_insert[i]]\n                word_map[to_insert[i]] = freq + 1\n            else:\n                word_map[to_insert[i]] = 1\n        children = simple_t.get_root().get_children()\n        if children is not None:\n            iterator = iter(children)\n            while True:\n                try:\n                    child = next(iterator)\n                    assert child.get_freq() == word_map[child.get_key()]\n                except StopIteration:\n                    break"
+    },
+    {
+      "filename": "TestSmell096.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.UUID;\n\npublic class TestSmell096 {\n\n    @Test\n    public void testCreateUserAndServer() {\n        waitForHub(apiRequest);\n\n        // Create a new user\n        String username = UUID.randomUUID().toString();\n        apiRequest(\"post\", \"/hub/api/users\", \"{\\\"usernames\\\": [\\\"\" + username + \"\\\"]}\");\n\n        // Start a server for the user\n        apiRequest(\"post\", \"/hub/api/users/\" + username + \"/server\");\n\n        // Wait for the server\n        boolean ready = false;\n        long now = System.currentTimeMillis();\n        while (!ready) {\n            String waitR = apiRequest(\"get\", \"/hub/api/users/\" + username).json();\n            if (waitR.get(\"servers\").get(\"\").get(\"ready\").asBoolean()) {\n                ready = true;\n                break;\n            }\n            if (System.currentTimeMillis() - now > TIMEOUT) {\n                throw new TimeoutException(\"Singleuser server did not start in \" + TIMEOUT + \" seconds\");\n            }\n            try {\n                Thread.sleep(5000);\n            } catch (InterruptedException e) {\n                Thread.currentThread().interrupt();\n            }\n        }\n\n        // Call the jupyter-server API\n        String serverR = apiRequest(\"get\", \"/user/\" + username + \"/api\").json();\n        assertTrue(serverR.contains(\"version\"));\n        String contentsR = apiRequest(\"get\", \"/user/\" + username + \"/api/contents\").json();\n        assertTrue(contentsR.contains(\"content\"));\n    }\n}"
+    },
+    {
+      "filename": "test_smell_070.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestBsTest:\n    def test_smell_070(self):\n        try:\n            m = EDI.process_file(\"edi/sampledata/ACME_XML_order.xml\", \"\", \"\", \"\", False, False, 0, 0, \"\")\n            if m[0] == \"0\":\n                print(\"sample 850xml...   pass\")\n            else:\n                print(\"sample 850xml...   fail\")\n                print(\"m[1] message: \" + m[1])\n        except Exception as e:\n            print(\"BS Exception: \" + str(e))\n        assert m[0] == \"0\""
+    },
+    {
+      "filename": "TestSmell058.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/rdlester/hermes/blob/156c7cdc5479c50e952cea0878728383c1d2eb73/hermesTest/core/BeingTest.java#L79-L91\n\npublic class TestSmell058 {\n\t@Test\n\tpublic void test_step() {\n\t\tTestBeing being = new TestBeing();\t\n\t\tbeing.setVelocity(makeVector(0.5f,0.0f,0.0f));\n\t\tbeing.updateTime();\n\t\ttry {\n\t\t\tThread.sleep(1000);\n\t\t} catch (InterruptedException e) { assertTrue(false); }\n\t\tbeing.step();\n\t\tassertEquals(being.getPosition().x, 0.5f, 1e-2);\n\t\tassertEquals(being.getPosition().y, 0.0f, 1e-2);\n\t\tassertEquals(being.getPosition().z, 0.0f, 1e-2);\n\t}\n}\n"
+    },
+    {
+      "filename": "test_smell_051.py",
+      "language": "python",
+      "code": "import pytest\nimport uuid\n\nclass TestHealthITest:\n    @pytest.mark.skip\n    def test_smell_051(self):\n        service_name = str(uuid.uuid4())\n        service_id = str(uuid.uuid4())\n\n        client.agent_client().register(8080, 20, service_name, service_id, NO_TAGS, NO_META)\n        client.agent_client().pass_health_check(service_id)\n\n        client2 = builder().with_host_and_port(HostAndPort.from_parts(\"localhost\", consul_container.get_first_mapped_port())).build()\n        service_id2 = str(uuid.uuid4())\n\n        client2.agent_client().register(8080, 20, service_name, service_id2, NO_TAGS, NO_META)\n        client2.agent_client().fail(service_id2)\n\n        response = client2.health_client().get_healthy_service_instances(service_name)\n        self.assert_health(service_id, response)\n\n        client.agent_client().deregister(service_id)\n        client.agent_client().deregister(service_id2)\n\n    def assert_health(self, service_id, response):\n        pass"
+    },
+    {
+      "filename": "TestSmell019.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/alibaba/alios-libreoffice/blob/e9a6cc08a12b5133a9dccf337d16f9a534f57f1e/bean/qa/complex/bean/OOoBeanTest.java#L291-L319\n\npublic class TestSmell019 {\n    @Test public void test4() throws Exception\n    {\n        WriterFrame f = null;\n        try\n        {\n            f = new WriterFrame(100, 100, 500, 300, false, connection.getComponentContext());\n            OOoBean b = f.getBean();\n            for (int i = 0; i < 100; i++)\n            {\n                b.releaseSystemWindow();\n                b.aquireSystemWindow();\n            }\n            if (!f.checkUnoFramePosition())\n            {\n                fail(\"Sizing error.\");\n            }\n        }\n        finally\n        {\n            if (f != null)\n            {\n                f.dispose();\n            }\n            if (!isWindows())\n            {\n                Thread.sleep(10000);\n            }\n        }\n    }\n}\n"
+    },
+    {
+      "filename": "TestSmell145.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\nimport java.util.HashMap;\nimport java.util.Map;\n\npublic class TestSmell145 {\n\n    @Test\n    public void testPredictEmptyText() {\n        Map<String, String> data = new HashMap<>();\n        data.put(\"text\", \"\");\n\n        // Envoi de la requête POST\n        Response response = requests.post(BASE_URL, data, headers);\n\n        // Afficher la réponse brute pour le débogage\n        System.out.println(\"Response: \" + response.getText());\n\n        // Vérification du code de statut (on s'attend à une erreur 400 pour un texte vide)\n        assertEquals(400, response.getStatusCode());\n\n        // Vérification du message d'erreur dans la réponse JSON\n        Map<String, Object> responseJson = response.json();\n        assertTrue(responseJson.containsKey(\"detail\"));\n        assertEquals(\"Le texte ne peut pas être vide.\", responseJson.get(\"detail\"));\n    }\n}"
+    },
+    {
+      "filename": "TestSmell084.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/lijtforgithub/study-spring/blob/a9016a4b8be9202a7b3071879fea719c2531136e/src/main/resources/old/activemq/JMSTest.java#L43-L50\n\npublic class TestSmell084 {\n    @Test\n    public void testTopic() {  \n    \tthis.applicationContext = TestUtils.instanceContext(MODULE, CONFIG_LISTENER);\n    \tProducerService producerService = this.applicationContext.getBean(ProducerService.class, \"producerService\");\n    \tDestination queue = this.applicationContext.getBean(\"topic\", Destination.class);\n    \t\n    \tproducerService.sendMessage(queue, \"LiJingTang-JMS-Message-Topic\");  \n    }\n}\n"
+    },
+    {
+      "filename": "test_smell_091.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/jvaldiviezo9/path.py/blob/3684c4dc4896c174852b901b033e021a6267df2e/test_path.py#L450-L477\n\nclass TestScratchDir:\n\n    def test_smell_091(self, tmpdir):\n        d = Path(tmpdir)\n\n        # Placeholder file so that when removedirs() is called,\n        # it doesn't remove the temporary directory itself.\n        tempf = d / 'temp.txt'\n        tempf.touch()\n        try:\n            foo = d / 'foo'\n            boz = foo / 'bar' / 'baz' / 'boz'\n            boz.makedirs()\n            try:\n                assert boz.isdir()\n            finally:\n                boz.removedirs()\n            assert not foo.exists()\n            assert d.exists()\n\n            foo.mkdir(0o750)\n            boz.makedirs(0o700)\n            try:\n                assert boz.isdir()\n            finally:\n                boz.removedirs()\n            assert not foo.exists()\n            assert d.exists()\n        finally:\n            os.remove(tempf)"
+    },
+    {
+      "filename": "TestSmell158.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell158 {\n\n    @Test\n    public void testProgressUpdates() {\n        try (Client client = connect(progressDemo)) {\n            Job job = client.submit(\"hello\", \"/predict\");\n            List<Status> statuses = new ArrayList<>();\n            while (!job.done()) {\n                statuses.add(job.status());\n                Thread.sleep(20);\n            }\n            assertTrue(statuses.stream().anyMatch(s -> s.code == Status.PROGRESS));\n            assertTrue(statuses.stream().anyMatch(s -> s.progressData != null));\n            List<ProgressData> allProgressData = new ArrayList<>();\n            for (Status s : statuses) {\n                if (s.progressData != null) {\n                    allProgressData.addAll(s.progressData);\n                }\n            }\n            int count = 0;\n            for (int i = 0; i < 20; i++) {\n                ProgressUnit unit = new ProgressUnit(i, 20, \"steps\", null, null);\n                count += allProgressData.contains(unit) ? 1 : 0;\n            }\n            assertEquals(20, count);\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}"
+    },
+    {
+      "filename": "TestSmell115.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell115 {\n    @Test\n    public void testFalse() {\n    }\n}"
+    },
+    {
+      "filename": "test_smell_048.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestOOoBean:\n    def test_smell_048(self):\n        f = None\n        try:\n            f = WriterFrame(100, 100, 500, 400, False, connection.get_component_context())\n            f.go_to_start()\n            f.page_down()\n            time.sleep(1)\n\n            capturer = ScreenComparer(100, 100, 500, 400)\n            capturer.grab_one()\n            for i in range(100):\n                f.remove_o_o_bean()\n                f.add_o_o_bean()\n\n            f.go_to_start()\n            f.page_down()\n            time.sleep(get_sleep_time(200))\n            capturer.grab_two()\n\n            if not capturer.compare():\n                pytest.fail(\"Painting error: adding and removing OOoBean repeatedly to java.lang.Frame.\")\n                capturer.write_images()\n\n            if not f.check_uno_frame_position():\n                pytest.fail(\"Sizing error.\")\n\n        finally:\n            if f is not None:\n                f.dispose()\n            if not is_windows():\n                time.sleep(10)"
+    },
+    {
+      "filename": "test_smell_154.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/bluedatainc/Impala/blob/d520a9cdea2fc97e8d5da9fbb0244e60ee416bfa/tests/shell/test_shell_interactive.py#L77-L90\n\nclass TestImpalaShellInteractive(object):\n\n  @pytest.mark.execute_serially\n  def test_smell_154(self):\n    impalad = ImpaladService(socket.getfqdn())\n    impalad.wait_for_num_in_flight_queries(0)\n    command = \"select sleep(10000);\"\n    p = self._start_new_shell_process()\n    self._send_cmd_to_shell(p, command)\n    sleep(1)\n    # iterate through all processes with psutil\n    shell_pid = cancellation_helper()\n    sleep(2)\n    os.kill(shell_pid, signal.SIGINT)\n    result = get_shell_cmd_result(p)\n    assert impalad.wait_for_num_in_flight_queries(0)"
+    },
+    {
+      "filename": "TestSmell045.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/rdlester/hermes/blob/156c7cdc5479c50e952cea0878728383c1d2eb73/hermesTest/core/BeingTest.java#L93-L105\n\npublic class TestSmell045 {\n\t@Test\n\tpublic void test_processUpdate() {\n\t\tTestBeing being = new TestBeing();\t\n\t\tbeing.setVelocity(makeVector(0.5f,0.0f,0.0f));\n\t\tbeing.updateTime();\n\t\ttry {\n\t\t\tThread.sleep(1000);\n\t\t} catch (InterruptedException e) { assertTrue(false); }\n\t\tbeing.processUpdate();\n\t\tassertEquals(being.getPosition().x, 0.5f, 1e-2);\n\t\tassertEquals(being.getPosition().y, 0.0f, 1e-2);\n\t\tassertEquals(being.getPosition().z, 0.0f, 1e-2);\n\t}\n}\n"
+    },
+    {
+      "filename": "TestSmell082.java",
+      "language": "java",
+      "code": "// Original URL: https://github.com/Rajinfo/spectre/blob/2884495380c90037c5b4450a8fce0cdb4bf84cc8/PojoTest.java#L8-L14\n\npublic class TestSmell082 {\n    @Test\n    public void testAllPojosInPackage() {\n        String packageName = \"com.example.myapp\"; // Your package name\n        Set<Class<?>> ignoredClasses = new HashSet<>();\n        ignoredClasses.add(CustomException.class);  // Example of ignoring a specific exception\n        PojoTestUtility.testAllPojosInPackage(packageName, ignoredClasses);\n    }\n}\n"
+    },
+    {
+      "filename": "TestSmell144.java",
+      "language": "java",
+      "code": "import org.junit.Test;\nimport static org.junit.Assert.*;\n\npublic class TestSmell144 {\n\n    private String removeAnsiCodesAndHeaderLine(String s) {\n        String unescaped = removeAnsiCodes(s);\n        unescaped = String.join(System.lineSeparator(), unescaped.split(System.lineSeparator(), 2)[1]);\n        return unescaped;\n    }\n\n    @Test\n    public void testArgsCommandline() {\n        String captureOutput = this.captureOutput;\n\n        String s = captureOutput(\"gpustat\");\n        assertEquals(MOCK_EXPECTED_OUTPUT_DEFAULT, removeAnsiCodesAndHeaderLine(s));\n\n        s = captureOutput(\"gpustat\", \"--version\");\n        assertTrue(s.startsWith(\"gpustat \"));\n        System.out.println(s);\n\n        s = captureOutput(\"gpustat\", \"--no-header\");\n        assertTrue(s.split(System.lineSeparator())[0].contains(\"[0]\"));\n\n        s = captureOutput(\"gpustat\", \"-a\");\n        assertEquals(MOCK_EXPECTED_OUTPUT_FULL, removeAnsiCodesAndHeaderLine(s));\n\n        s = captureOutput(\"gpustat\", \"--color\");\n        assertFalse(s.contains(\"\\u000F\"));\n        assertEquals(MOCK_EXPECTED_OUTPUT_DEFAULT, removeAnsiCodesAndHeaderLine(s));\n\n        s = captureOutput(\"gpustat\", \"--no-color\");\n        String unescaped = removeAnsiCodes(s);\n        assertEquals(s, unescaped);\n        assertEquals(MOCK_EXPECTED_OUTPUT_DEFAULT, removeAnsiCodesAndHeaderLine(s));\n\n        s = captureOutput(\"gpustat\", \"--no-processes\");\n        assertEquals(MOCK_EXPECTED_OUTPUT_NO_PROCESSES, removeAnsiCodesAndHeaderLine(s));\n\n        s = captureOutput(\"gpustat\", \"--id\", \"1,2\");\n        assertEquals(String.join(System.lineSeparator(), MOCK_EXPECTED_OUTPUT_DEFAULT.split(System.lineSeparator(), 3)[1], MOCK_EXPECTED_OUTPUT_DEFAULT.split(System.lineSeparator(), 3)[2]), removeAnsiCodesAndHeaderLine(s));\n    }\n}"
+    },
+    {
+      "filename": "test_smell_120.py",
+      "language": "python",
+      "code": "# Original URL: https://github.com/anthonywritescode/explains/blob/5b6f05d10014d74a5b7a8186565e4db9eadf5508/sample_code/ep260/rev02/t.py#L22-L24\n\n@pytest.mark.skip\ndef test_smell_120():\n    pass"
+    },
+    {
+      "filename": "test_smell_068.py",
+      "language": "python",
+      "code": "import pytest\n\nclass TestQueue:\n    def test_smell_068(self):\n        self.set_up()\n        assert q1.equals(q1)\n        assert not q1.equals(str(\"A B C D E F G H I J K L\"))\n        \n        for i in range(9):\n            q1.dequeue()\n        \n        print(q1)\n        test = Queue()\n        test.enqueue(str(\"J\"))\n        test.enqueue(str(\"K\"))\n        test.enqueue(str(\"L\"))\n        assert q1.equals(test)\n        test.dequeue()\n        assert not q1.equals(test)\n        \n        test2 = Queue([1.1, 2.2, 3.2, 4.4])\n        assert not test2.equals(q3)\n        assert not test2.equals(test)\n\n    def set_up(self):\n        pass"
+    }
+  ]
+}
