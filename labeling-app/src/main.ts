@@ -161,13 +161,68 @@ function build(root: HTMLDivElement): void {
   codePanel.append(codeHeader, pre);
 
   const smellPanel = el("section", "smell-panel");
+  const smellHeading = el("div", "smell-heading");
+  const definitionsButton = el("button", "button button-small", "Definitions");
+  definitionsButton.type = "button";
+  definitionsButton.setAttribute("aria-expanded", "false");
+  definitionsButton.setAttribute("aria-controls", "smell-definitions");
+  const definitions = el("div", "definitions");
+  definitions.id = "smell-definitions";
+  definitions.hidden = true;
+  definitions.append(el("p", "hint", "Detection rules from Peruma et al. (2020)."));
+  const definitionList = el("dl", "definition-list");
+  for (const smell of SMELLS) {
+    const term = el("dt", undefined, smell.label);
+    term.id = `definition-${smell.id}`;
+    const description = document.createElement("dd");
+    description.append(el("p", "definition-rule", smell.rule), el("p", "definition-note", smell.note));
+    for (const example of smell.examples) {
+      const figure = el("figure", "example");
+      figure.append(el("figcaption", undefined, `${example.language} · ${example.caption}`));
+      const snippet = document.createElement("pre");
+      snippet.className = "example-code";
+      const code = document.createElement("code");
+      code.textContent = example.code;
+      snippet.append(code);
+      figure.append(snippet);
+      description.append(figure);
+    }
+    definitionList.append(term, description);
+  }
+  definitions.append(definitionList);
+
+  function showDefinitions(smellId?: SmellId): void {
+    definitions.hidden = false;
+    definitionsButton.setAttribute("aria-expanded", "true");
+    for (const term of definitionList.querySelectorAll("dt")) {
+      term.classList.toggle("is-target", smellId !== undefined && term.id === `definition-${smellId}`);
+    }
+    const term = smellId ? definitionList.querySelector<HTMLElement>(`#definition-${smellId}`) : null;
+    if (term) {
+      const top = term.getBoundingClientRect().top - definitions.getBoundingClientRect().top + definitions.scrollTop;
+      definitions.scrollTop = top;
+    } else {
+      definitions.scrollTop = 0;
+    }
+  }
+
+  definitionsButton.addEventListener("click", () => {
+    if (definitions.hidden) showDefinitions();
+    else {
+      definitions.hidden = true;
+      definitionsButton.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  smellHeading.append(el("h2", undefined, "Smells present"), definitionsButton);
   smellPanel.append(
-    el("h2", undefined, "Smells present"),
+    smellHeading,
     el("p", "hint", "Check a smell when it exists in this file. Leave it unchecked when it does not."),
+    definitions,
   );
   const list = el("ul", "smell-list");
   for (const smell of SMELLS) {
-    const item = document.createElement("li");
+    const item = el("li", "smell-row");
     const label = document.createElement("label");
     const input = document.createElement("input");
     input.type = "checkbox";
@@ -179,7 +234,11 @@ function build(root: HTMLDivElement): void {
     });
     checks.set(smell.id, input);
     label.append(input, document.createTextNode(smell.label));
-    item.append(label);
+    const info = el("button", "info-button", "?");
+    info.type = "button";
+    info.setAttribute("aria-label", `Show definition of ${smell.label}`);
+    info.addEventListener("click", () => showDefinitions(smell.id));
+    item.append(label, info);
     list.append(item);
   }
   smellPanel.append(list);
